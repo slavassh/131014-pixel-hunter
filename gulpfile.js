@@ -1,16 +1,18 @@
 'use strict';
 
-const del = require('del');
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const plumber = require('gulp-plumber');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const server = require('browser-sync').create();
-const mqpacker = require('css-mqpacker');
-const minify = require('gulp-csso');
-const rename = require('gulp-rename');
-const imagemin = require('gulp-imagemin');
+const del             = require('del');
+const gulp            = require('gulp');
+const sass            = require('gulp-sass');
+const plumber         = require('gulp-plumber');
+const postcss         = require('gulp-postcss');
+const autoprefixer    = require('autoprefixer');
+const server          = require('browser-sync').create();
+const mqpacker        = require('css-mqpacker');
+const minify          = require('gulp-csso');
+const rename          = require('gulp-rename');
+const imagemin        = require('gulp-imagemin');
+const babel           = require('gulp-babel');
+const sourcemaps      = require('gulp-sourcemaps');
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
@@ -38,6 +40,11 @@ gulp.task('style', function () {
 gulp.task('scripts', function () {
   return gulp.src('js/**/*.js')
     .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/js/'));
 });
 
