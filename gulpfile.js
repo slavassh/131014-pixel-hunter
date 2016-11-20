@@ -96,7 +96,7 @@ gulp.task('serve', ['assemble'], function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('*.html', ['copy-html']);
+  // gulp.watch('*.html', ['copy-html']);
   gulp.watch('js/**/*.js', ['scripts']).on('change', server.reload);
 });
 
