@@ -56,7 +56,7 @@ const onClick = (evt) => {
   let target = evt.target;
   while (target !== container) {
     if (target.classList.contains('game__option')) {
-      return insertBlock(statsElement);
+      insertBlock(statsElement);
     }
     target = target.parentNode;
   }
