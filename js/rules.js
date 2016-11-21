@@ -2,6 +2,8 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
+import game1Element from './game-1.js';
+import insertBlock from './page.js';
 
 const rulesElement = getElementFromTemplate(
     `<header class="header">
@@ -29,4 +31,23 @@ const rulesElement = getElementFromTemplate(
       </form>
     </div>`
 );
+
+let rulesSubmit = rulesElement.querySelector('.rules__button');
+
+rulesElement.querySelector('.rules__input').oninput = function () {
+  if (this.value) {
+    rulesSubmit.removeAttribute('disabled');
+  } else {
+    rulesSubmit.setAttribute('disabled', '');
+  }
+};
+
+const onSubmit = (evt) => {
+  evt.preventDefault();
+  insertBlock(game1Element);
+};
+
+rulesSubmit.addEventListener('click', onSubmit);
+
+
 export default rulesElement;

@@ -2,6 +2,8 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
+import rulesElement from './rules.js';
+import insertBlock from './page.js';
 
 const greetingElement = getElementFromTemplate(
     `<div class="greeting  central--blur">
@@ -18,4 +20,14 @@ const greetingElement = getElementFromTemplate(
       <div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div>
     </div>`
 );
+
+const rulesArrow = greetingElement.querySelector('.greeting__continue');
+
+const onClick = (evt) => {
+  evt.preventDefault();
+  insertBlock(rulesElement);
+};
+
+rulesArrow.addEventListener('click', onClick);
+
 export default greetingElement;
