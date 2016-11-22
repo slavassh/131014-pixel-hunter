@@ -113,4 +113,5 @@ const statsElement = getElementFromTemplate(
       </table>
     </div>`
 );
+
 export default statsElement;

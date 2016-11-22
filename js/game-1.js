@@ -2,6 +2,8 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
+import game2Element from './game-2.js';
+import insertBlock from './page.js';
 
 const game1Element = getElementFromTemplate(
     `<header class="header">
@@ -60,4 +62,21 @@ const game1Element = getElementFromTemplate(
       </div>
     </div>`
 );
+
+const container = game1Element.querySelector('.game');
+
+const onClick = (evt) => {
+  let target = evt.target;
+  while (target !== container) {
+    if (target.classList.contains('game__answer')) {
+      insertBlock(game2Element);
+      break;
+    }
+    target = target.parentNode;
+  }
+  evt.preventDefault();
+};
+
+container.addEventListener('click', onClick);
+
 export default game1Element;
