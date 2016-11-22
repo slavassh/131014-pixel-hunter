@@ -49,5 +49,4 @@ const onSubmit = (evt) => {
 
 rulesSubmit.addEventListener('click', onSubmit);
 
-
 export default rulesElement;

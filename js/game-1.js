@@ -70,6 +70,7 @@ const onClick = (evt) => {
   while (target !== container) {
     if (target.classList.contains('game__answer')) {
       insertBlock(game2Element);
+      break;
     }
     target = target.parentNode;
   }
