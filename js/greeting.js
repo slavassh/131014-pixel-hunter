@@ -15,25 +15,28 @@ const welcome = {
             Фотореализм обманчив и коварен.<br>
             Помни, главное — смотреть очень внимательно.`
   },
-  footer: '<div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div>'
+  logo: '<img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter">',
+  continue: '<img src="img/arrow_right.svg" width="64" height="64" alt="Next">'
 };
 
 const head = `<h1 class="greeting__asterisk">${welcome.asterisk}</h1>`;
 
-const content = `<div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
+const content = `<div class="greeting__logo">${welcome.logo}</div>
       <div class="greeting__challenge">
       <h3>${welcome.content.title}</h3>
       <p>${welcome.content.text}</p>
       </div>`;
 
-const footer = `<footer>${welcome.footer}</footer>`;
+const footer = `<div class="greeting__continue"><span>${welcome.continue}</span></div>`;
 
 const article = `
       ${head}
       <div class="greeting  central--blur">
         ${content}
       </div>
-      ${footer}`;
+      <footer>
+        ${footer};
+      </footer>`
 
 const greetingElement = getElementFromTemplate(article);
 

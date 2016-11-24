@@ -5,23 +5,33 @@ import getElementFromTemplate from './getElement.js';
 import statsElement from './stats.js';
 import insertBlock from './page.js';
 
-const game3Element = getElementFromTemplate(
-    `<header class="header">
+const game = {
+  timer: 'NN',
+  task: 'Найдите рисунок среди изображений',
+  answers: {
+    photo: 'Фото',
+    paint: 'Рисунок'
+  }
+};
+
+const header = `    
+    <header class="header">
       <div class="header__back">
         <span class="back">
           <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
           <img src="img/logo_small.png" width="101" height="44">
         </span>
       </div>
-      <h1 class="game__timer">NN</h1>
+      <h1 class="game__timer">${game.timer}</h1>
       <div class="game__lives">
         <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
         <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
         <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
       </div>
-    </header>
-    <div class="game">
-      <p class="game__task">Найдите рисунок среди изображений</p>
+    </header>`;
+
+const question = `
+      <p class="game__task">${game.task}</p>
       <form class="game__content  game__content--triple">
         <div class="game__option">
           <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
@@ -32,7 +42,9 @@ const game3Element = getElementFromTemplate(
         <div class="game__option">
           <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
         </div>
-      </form>
+      </form>`;
+
+const stats = `
       <div class="stats">
         <ul class="stats">
           <li class="stats__result stats__result--wrong"></li>
@@ -46,9 +58,16 @@ const game3Element = getElementFromTemplate(
           <li class="stats__result stats__result--fast"></li>
           <li class="stats__result stats__result--unknown"></li>
         </ul>
-      </div>
-    </div>`
-);
+      </div>`;
+
+const screen = `
+      ${header}
+      <div class="game">
+        ${question}        
+        ${stats}
+      </div>`;
+
+const game3Element = getElementFromTemplate(screen);
 
 const container = game3Element.querySelector('.game');
 
