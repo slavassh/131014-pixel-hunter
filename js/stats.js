@@ -2,9 +2,10 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
+import stats from './status.js';
 
 const resume = {
-  win: 'Победа!',
+  head: 'Победа!',
   result1: {
     number: 1,
     stats: {
@@ -67,25 +68,14 @@ const header = `
       </div>
     </header>`;
 
-const headline = `<h1>${resume.win}</h1>`;
+const headline = `<h1>${resume.head}</h1>`;
 
 const table1 = `
       <table class="result__table">
         <tr>
           <td class="result__number">${resume.result1.number}.</td>
           <td colspan="2">
-            <ul class="stats">
-              <li class="stats__result stats__result--wrong"></li>
-              <li class="stats__result stats__result--slow"></li>
-              <li class="stats__result stats__result--fast"></li>
-              <li class="stats__result stats__result--correct"></li>
-              <li class="stats__result stats__result--wrong"></li>
-              <li class="stats__result stats__result--unknown"></li>
-              <li class="stats__result stats__result--slow"></li>
-              <li class="stats__result stats__result--unknown"></li>
-              <li class="stats__result stats__result--fast"></li>
-              <li class="stats__result stats__result--unknown"></li>
-            </ul>
+            ${stats}
           </td>
           <td class="result__points">×&nbsp;${resume.result1.stats.points}</td>
           <td class="result__total">${resume.result1.stats.total}</td>
@@ -120,18 +110,7 @@ const table2 = `<table class="result__table">
         <tr>
           <td class="result__number">${resume.result2.number}.</td>
           <td>
-            <ul class="stats">
-              <li class="stats__result stats__result--wrong"></li>
-              <li class="stats__result stats__result--slow"></li>
-              <li class="stats__result stats__result--fast"></li>
-              <li class="stats__result stats__result--correct"></li>
-              <li class="stats__result stats__result--wrong"></li>
-              <li class="stats__result stats__result--unknown"></li>
-              <li class="stats__result stats__result--slow"></li>
-              <li class="stats__result stats__result--wrong"></li>
-              <li class="stats__result stats__result--fast"></li>
-              <li class="stats__result stats__result--wrong"></li>
-            </ul>
+            ${stats}
           </td>
           <td class="result__total"></td>
           <td class="result__total  result__total--final">${resume.result1.stats.total}</td>
@@ -142,18 +121,7 @@ const table3 = `<table class="result__table">
         <tr>
           <td class="result__number">${resume.result3.number}.</td>
           <td colspan="2">
-            <ul class="stats">
-              <li class="stats__result stats__result--wrong"></li>
-              <li class="stats__result stats__result--slow"></li>
-              <li class="stats__result stats__result--fast"></li>
-              <li class="stats__result stats__result--correct"></li>
-              <li class="stats__result stats__result--wrong"></li>
-              <li class="stats__result stats__result--unknown"></li>
-              <li class="stats__result stats__result--slow"></li>
-              <li class="stats__result stats__result--unknown"></li>
-              <li class="stats__result stats__result--fast"></li>
-              <li class="stats__result stats__result--unknown"></li>
-            </ul>
+            ${stats}
           </td>
           <td class="result__points">×&nbsp;${resume.result3.stats.points}</td>
           <td class="result__total">${resume.result3.stats.total}</td>

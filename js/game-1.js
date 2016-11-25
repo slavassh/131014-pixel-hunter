@@ -4,11 +4,14 @@
 import getElementFromTemplate from './getElement.js';
 import game2Element from './game-2.js';
 import insertBlock from './page.js';
+import stats from './status.js';
+import lives from './lives.js';
 
 const game = {
   timer: 'NN',
   task: 'Угадайте для каждого изображения фото или рисунок?',
   answers: {
+    image: 'http://placehold.it/468x458',
     photo: 'Фото',
     paint: 'Рисунок'
   }
@@ -22,18 +25,14 @@ const header = `<header class="header">
           </span>
       </div>
       <h1 class="game__timer">${game.timer}</h1>
-      <div class="game__lives">
-        <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-        <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-        <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      </div>
+      ${lives}
     </header>`;
 
 const question = `
       <p class="game__task">${game.task}</p>
       <form class="game__content">
         <div class="game__option">
-          <img src="http://placehold.it/468x458" alt="Option 1" width="468" height="458">
+          <img src="${game.answers.image}" alt="Option 1" width="468" height="458">
           <label class="game__answer game__answer--photo">
             <input name="question1" type="radio" value="photo">
             <span>${game.answers.photo}</span>
@@ -44,7 +43,7 @@ const question = `
           </label>
         </div>
         <div class="game__option">
-          <img src="http://placehold.it/468x458" alt="Option 2" width="468" height="458">
+          <img src="${game.answers.image}" alt="Option 2" width="468" height="458">
           <label class="game__answer  game__answer--photo">
             <input name="question2" type="radio" value="photo">
             <span>${game.answers.photo}</span>
@@ -56,26 +55,13 @@ const question = `
         </div>
       </form>`;
 
-const stats = `<div class="stats">
-        <ul class="stats">
-          <li class="stats__result stats__result--wrong"></li>
-          <li class="stats__result stats__result--slow"></li>
-          <li class="stats__result stats__result--fast"></li>
-          <li class="stats__result stats__result--correct"></li>
-          <li class="stats__result stats__result--unknown"></li>
-          <li class="stats__result stats__result--unknown"></li>
-          <li class="stats__result stats__result--unknown"></li>
-          <li class="stats__result stats__result--unknown"></li>
-          <li class="stats__result stats__result--unknown"></li>
-          <li class="stats__result stats__result--unknown"></li>
-        </ul>
-      </div>`;
-
 const screen = `
       ${header}
       <div class="game">
-        ${question}        
+        ${question}
+       <div class="stats">
         ${stats}
+       </div>
       </div>`;
 
 const game1Element = getElementFromTemplate(screen);

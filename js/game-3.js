@@ -4,11 +4,14 @@
 import getElementFromTemplate from './getElement.js';
 import statsElement from './stats.js';
 import insertBlock from './page.js';
+import stats from './status.js';
+import lives from './lives.js';
 
 const game = {
   timer: 'NN',
   task: 'Найдите рисунок среди изображений',
   answers: {
+    image: 'http://placehold.it/304x455',
     photo: 'Фото',
     paint: 'Рисунок'
   }
@@ -23,42 +26,22 @@ const header = `
         </span>
       </div>
       <h1 class="game__timer">${game.timer}</h1>
-      <div class="game__lives">
-        <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-        <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-        <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      </div>
+      ${lives}
     </header>`;
 
 const question = `
       <p class="game__task">${game.task}</p>
       <form class="game__content  game__content--triple">
         <div class="game__option">
-          <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+          <img src="${game.answers.image}" alt="Option 1" width="304" height="455">
         </div>
         <div class="game__option  game__option--selected">
-          <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+          <img src="${game.answers.image}" alt="Option 1" width="304" height="455">
         </div>
         <div class="game__option">
-          <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+          <img src="${game.answers.image}" alt="Option 1" width="304" height="455">
         </div>
       </form>`;
-
-const stats = `
-      <div class="stats">
-        <ul class="stats">
-          <li class="stats__result stats__result--wrong"></li>
-          <li class="stats__result stats__result--slow"></li>
-          <li class="stats__result stats__result--fast"></li>
-          <li class="stats__result stats__result--correct"></li>
-          <li class="stats__result stats__result--wrong"></li>
-          <li class="stats__result stats__result--unknown"></li>
-          <li class="stats__result stats__result--slow"></li>
-          <li class="stats__result stats__result--unknown"></li>
-          <li class="stats__result stats__result--fast"></li>
-          <li class="stats__result stats__result--unknown"></li>
-        </ul>
-      </div>`;
 
 const screen = `
       ${header}
