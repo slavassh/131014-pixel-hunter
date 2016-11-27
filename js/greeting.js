@@ -1,6 +1,3 @@
-/**
- * Created by Viacheslav on 20.11.2016.
- */
 import getElementFromTemplate from './getElement.js';
 import rulesElement from './rules.js';
 import insertBlock from './page.js';
