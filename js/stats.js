@@ -2,7 +2,7 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
-import stats from './status.js';
+import stats from './templates/status.js';
 
 const resume = {
   head: 'Победа!',
