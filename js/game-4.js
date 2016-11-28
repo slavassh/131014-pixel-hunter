@@ -3,7 +3,7 @@
  */
 
 import game from './game.js';
-import nextScreen from './game-2.js';
+import nextScreen from './game-5.js';
 import question from './templates/question-1.js';
 
 const data = {
