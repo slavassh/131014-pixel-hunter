@@ -20,10 +20,18 @@ export default (data, question, nextScreen) => {
 
   const container = gameElement.querySelector('.game');
 
+  let targetClass = '';
+
+  if (gameElement.querySelector('.game__answer')) {
+    targetClass = 'game__answer';
+  } else {
+    targetClass = 'game__option';
+  }
+
   const onClick = (evt) => {
     let target = evt.target;
     while (target !== container) {
-      if (target.classList.contains('game__answer')) {
+      if (target.classList.contains(targetClass)) {
         insertBlock(nextScreen);
         break;
       }

@@ -2,7 +2,7 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
-import game1Element from './game-1.js';
+import nextScreen from './game-1.js';
 import insertBlock from './page.js';
 
 const rulesElement = getElementFromTemplate(
@@ -44,7 +44,7 @@ rulesElement.querySelector('.rules__input').oninput = function () {
 
 const onSubmit = (evt) => {
   evt.preventDefault();
-  insertBlock(game1Element);
+  insertBlock(nextScreen);
 };
 
 rulesSubmit.addEventListener('click', onSubmit);

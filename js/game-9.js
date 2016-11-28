@@ -2,7 +2,7 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import game from './game.js';
-import nextScreen from './game-4.js';
+import nextScreen from './game-10.js';
 import question from './templates/question-3.js';
 
 const data = {
