@@ -2,8 +2,7 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
-import nextScreen from './game-1.js';
-import insertBlock from './page.js';
+import nextScreen from './game.js';
 
 const rulesElement = getElementFromTemplate(
     `<header class="header">
@@ -44,7 +43,7 @@ rulesElement.querySelector('.rules__input').oninput = function () {
 
 const onSubmit = (evt) => {
   evt.preventDefault();
-  insertBlock(nextScreen);
+  nextScreen();
 };
 
 rulesSubmit.addEventListener('click', onSubmit);

@@ -3,20 +3,23 @@
  */
 import getElementFromTemplate from './getElement.js';
 import insertBlock from './page.js';
-import stats from './templates/status.js';
-import header from './templates/header.js';
+import renderStats from './templates/status.js';
+import renderHeader from './templates/header.js';
+import renderQuestion from './templates/questions.js';
+import {gameState, setScreen, getScreen} from './data/process.js';
 
-export default (data, question, nextScreen) => {
-  const screen = `
-    ${header}
-      <div class="game">
-        ${question(data)}
-       <div class="stats">
-        ${stats}
-       </div>
-      </div>`;
+let currentState = gameState;
 
-  const gameElement = getElementFromTemplate(screen);
+const screenUpdate = () => {
+  const gameElement = getElementFromTemplate(`
+    ${renderHeader()}
+    <div class="game">
+      ${renderQuestion(getScreen(currentState.currentQuestion))}
+      <div class="stats">
+        ${renderStats()}
+      </div>
+     </div>`
+  );
 
   const container = gameElement.querySelector('.game');
 
@@ -32,7 +35,8 @@ export default (data, question, nextScreen) => {
     let target = evt.target;
     while (target !== container) {
       if (target.classList.contains(targetClass)) {
-        insertBlock(nextScreen);
+        currentState = setScreen(currentState, currentState.currentQuestion + 1);
+        screenUpdate();
         break;
       }
       target = target.parentNode;
@@ -40,7 +44,8 @@ export default (data, question, nextScreen) => {
     evt.preventDefault();
   };
 
+  insertBlock(gameElement);
   container.addEventListener('click', onClick);
-
-  return gameElement;
 };
+
+export default screenUpdate;
