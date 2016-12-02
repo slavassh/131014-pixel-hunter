@@ -10,7 +10,7 @@ const stats = {
 };
 
 export default () => {
-  `<ul class="stats">
+  return `<ul class="stats">
       <li class="stats__result ${stats.wrong}"></li>
       <li class="stats__result ${stats.slow}"></li>
       <li class="stats__result ${stats.fast}"></li>

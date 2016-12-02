@@ -7,8 +7,10 @@ import renderStats from './templates/status.js';
 import renderHeader from './templates/header.js';
 import renderQuestion from './templates/questions.js';
 import {gameState, setScreen, getScreen} from './data/process.js';
+import statsElement from './stats.js';
 
 let currentState = gameState;
+
 
 const screenUpdate = () => {
   const gameElement = getElementFromTemplate(`
@@ -36,7 +38,11 @@ const screenUpdate = () => {
     while (target !== container) {
       if (target.classList.contains(targetClass)) {
         currentState = setScreen(currentState, currentState.currentQuestion + 1);
-        screenUpdate();
+        if (currentState.currentQuestion < (gameState.maxQuestions - 1)) {
+          screenUpdate();
+        } else {
+          insertBlock(statsElement);
+        }
         break;
       }
       target = target.parentNode;

@@ -5,10 +5,14 @@ import {screens} from './game-data.js';
 
 export const gameState = {
   livesCount: 3,
-  currentQuestion: 0
+  currentQuestion: 0,
+  maxQuestions: 10
 };
 
 export const setScreen = (game, question) => {
+  if (!(question >= 0 && question < gameState.maxQuestions)) {
+    throw new RangeError(`This game has only ${gameState.maxQuestions} questions`);
+  }
   return Object.assign({}, game, {
     currentQuestion: question
   });
