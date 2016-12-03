@@ -3,7 +3,7 @@
  */
 
 let getElementFromTemplate = (template) => {
-  let node = document.createElement('span');
+  let node = document.createElement('div');
   node.innerHTML = template;
   return node.cloneNode(true);
 };

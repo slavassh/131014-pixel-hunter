@@ -6,6 +6,7 @@ import {screens} from './game-data.js';
 export const gameState = {
   livesCount: 3,
   currentQuestion: 0,
+  time: 30,
   maxQuestions: 10
 };
 
@@ -21,3 +22,10 @@ export const setScreen = (game, question) => {
 export const getScreen = (num) => {
   return screens[`screen-${num}`];
 };
+
+export const setTime = (game, time) => {
+  return Object.assign({}, game, {
+    time: time
+  });
+};
+

@@ -3,10 +3,12 @@
  */
 import {game} from '../data/game-data.js';
 
+const gameContainer = document.createElement('div');
+gameContainer.classList.add('game');
+
 const question = (data) => {
-  let tpl = '';
   if (data.task === game.questions['task-1']) {
-    tpl = `<p class="game__task">${data.task}</p>
+    gameContainer.innerHTML = `<p class="game__task">${data.task}</p>
           <form class="game__content">
             <div class="game__option">
               <img src="${data.answers[0].image}" alt="Option 1" width="468" height="458">
@@ -32,7 +34,7 @@ const question = (data) => {
             </div>
           </form>`;
   } else if (data.task === game.questions['task-2']) {
-    tpl = `<p class="game__task">${data.task}</p>
+    gameContainer.innerHTML = `<p class="game__task">${data.task}</p>
             <form class="game__content  game__content--wide">
               <div class="game__option">
                 <img src="${data.answers[0].image}" alt="Option 1" width="705" height="455">
@@ -47,7 +49,7 @@ const question = (data) => {
               </div>
             </form>`;
   } else if (data.task === game.questions['task-3']) {
-    tpl = `<p class="game__task">${data.task}</p>
+    gameContainer.innerHTML = `<p class="game__task">${data.task}</p>
             <form class="game__content  game__content--triple">
               <div class="game__option">
                 <img src="${data.answers[0].image}" alt="Option 1" width="304" height="455">
@@ -60,7 +62,7 @@ const question = (data) => {
               </div>
             </form>`;
   }
-  return tpl;
+  return gameContainer;
 };
 
 export default question;
