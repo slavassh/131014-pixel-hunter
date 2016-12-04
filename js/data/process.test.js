@@ -1,7 +1,7 @@
 /**
  * Created by slavash on 01.12.2016.
  */
-import {gameState, setScreen} from './process.js';
+import {gameState, setScreen, setLives, setTime} from './process.js';
 import assert from 'assert';
 
 
@@ -19,6 +19,12 @@ describe('Game parameters', () => {
       });
       it('setScreen throws an error if Number of screens > 10', () => {
         assert.throws(() => setScreen(gameState, 10));
+      });
+      it('setLives throws an error if Number of lives < 0', () => {
+        assert.throws(() => setLives(gameState, -1));
+      });
+      it('setTime throws an error if time < 0', () => {
+        assert.throws(() => setTime(gameState, -1));
       });
     });
   });

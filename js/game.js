@@ -6,7 +6,7 @@ import insertBlock from './page.js';
 import renderStats from './templates/status.js';
 import renderHeader from './templates/header.js';
 import renderQuestion from './templates/questions.js';
-import {gameState, setScreen, getScreen, setTime} from './data/process.js';
+import {gameState, setScreen, getScreen, setTime, setLives} from './data/process.js';
 import statsScreen from './stats.js';
 
 let currentState = gameState;
@@ -41,7 +41,14 @@ const nextQuestion = () => {
     clearInterval(interval);
     onStart();
   } else {
-    insertBlock(statsScreen);
+    onEnd();
+  }
+};
+
+const onFail = () => {
+  currentState = setLives(currentState, currentState.livesCount - 1);
+  if (currentState.livesCount === 0) {
+    onEnd();
   }
 };
 
@@ -75,10 +82,15 @@ export const onStart = () => {
     currentState = setTime(currentState, currentState.time - 1);
     if (currentState.time === 0) {
       clearInterval(interval);
+      onFail();
       nextQuestion(currentState);
     }
     updateHeader(currentState);
   }, 1000);
+};
+
+const onEnd = () => {
+  insertBlock(statsScreen);
 };
 
 const screenUpdate = () => {

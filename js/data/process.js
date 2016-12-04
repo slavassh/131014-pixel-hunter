@@ -24,8 +24,21 @@ export const getScreen = (num) => {
 };
 
 export const setTime = (game, time) => {
+  if (time < 0) {
+    throw new RangeError('Time can not be negative');
+  }
   return Object.assign({}, game, {
     time: time
+  });
+};
+
+export const setLives = (game, lives) => {
+  if (lives < 0) {
+    throw new RangeError('Number of lives can not be negative');
+  }
+
+  return Object.assign({}, game, {
+    livesCount: lives
   });
 };
 
