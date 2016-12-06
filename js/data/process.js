@@ -6,22 +6,19 @@ import {screens} from './game-data.js';
 export const gameState = {
   livesCount: 3,
   currentQuestion: 0,
-  time: 30,
-  maxQuestions: 10
+  time: 30
 };
 
 export const setScreen = (game, question) => {
-  if (!(question >= 0 && question < gameState.maxQuestions)) {
-    throw new RangeError(`This game has only ${gameState.maxQuestions} questions`);
+  if (!(question >= 0 && question < screens.length)) {
+    throw new RangeError(`This game has only ${screens.length} questions`);
   }
   return Object.assign({}, game, {
     currentQuestion: question
   });
 };
 
-export const getScreen = (num) => {
-  return screens[`screen-${num}`];
-};
+export const getScreen = (num) => screens[num];
 
 export const setTime = (game, time) => {
   if (time < 0) {

@@ -1,15 +1,9 @@
-export const game = {
-  questions: [
-    'Угадайте для каждого изображения фото или рисунок?',
-    'Угадай, фото или рисунок?',
-    'Найдите рисунок среди изображений'
-  ]
-};
+import {taskType} from './task-type.js';
 
-export const screens = {
-  'screen-0': {
-    task: game.questions[0],
-    answers: [
+export const screens = [
+  {
+    type: taskType.DOUBLE,
+    options: [
       {
         image: 'http://placehold.it/468x458',
         correct: 'photo'
@@ -20,18 +14,18 @@ export const screens = {
       }
     ]
   },
-  'screen-1': {
-    task: game.questions[1],
-    answers: [
+  {
+    type: taskType.WIDE,
+    options: [
       {
         image: 'http://placehold.it/705x455',
         correct: 'paint'
       }
     ]
   },
-  'screen-2': {
-    task: game.questions[2],
-    answers: [
+  {
+    type: taskType.TRIPLE,
+    options: [
       {
         image: 'http://placehold.it/304x455',
         correct: 'photo'
@@ -46,9 +40,9 @@ export const screens = {
       },
     ]
   },
-  'screen-3': {
-    task: game.questions[0],
-    answers: [
+  {
+    type: taskType.DOUBLE,
+    options: [
       {
         image: 'http://placehold.it/468x458',
         correct: 'photo'
@@ -59,18 +53,18 @@ export const screens = {
       }
     ]
   },
-  'screen-4': {
-    task: game.questions[1],
-    answers: [
+  {
+    type: taskType.WIDE,
+    options: [
       {
         image: 'http://placehold.it/705x455',
         correct: 'paint'
       }
     ]
   },
-  'screen-5': {
-    task: game.questions[2],
-    answers: [
+  {
+    type: taskType.TRIPLE,
+    options: [
       {
         image: 'http://placehold.it/304x455',
         correct: 'photo'
@@ -85,9 +79,9 @@ export const screens = {
       },
     ]
   },
-  'screen-6': {
-    task: game.questions[0],
-    answers: [
+  {
+    type: taskType.DOUBLE,
+    options: [
       {
         image: 'http://placehold.it/468x458',
         correct: 'photo'
@@ -98,18 +92,18 @@ export const screens = {
       }
     ]
   },
-  'screen-7': {
-    task: game.questions[1],
-    answers: [
+  {
+    type: taskType.WIDE,
+    options: [
       {
         image: 'http://placehold.it/705x455',
         correct: 'paint'
       }
     ]
   },
-  'screen-8': {
-    task: game.questions[2],
-    answers: [
+  {
+    type: taskType.TRIPLE,
+    options: [
       {
         image: 'http://placehold.it/304x455',
         correct: 'photo'
@@ -124,9 +118,9 @@ export const screens = {
       },
     ]
   },
-  'screen-9': {
-    task: game.questions[2],
-    answers: [
+  {
+    type: taskType.TRIPLE,
+    options: [
       {
         image: 'http://placehold.it/304x455',
         correct: 'photo'
@@ -141,5 +135,5 @@ export const screens = {
       },
     ]
   }
-};
+];
 

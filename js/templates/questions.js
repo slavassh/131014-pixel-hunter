@@ -1,18 +1,18 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {game} from '../data/game-data.js';
+import {taskType, questions} from '../data/task-type.js';
 
 const gameContainer = document.createElement('div');
 gameContainer.classList.add('game');
 
 const question = (data) => {
-  if (data.task === game.questions[0]) {
+  if (data.type === taskType.DOUBLE) {
     const question1 = () => {
       let tpl = '';
-      for (let i = 0; i < data.answers.length; i++) {
+      for (let i = 0; i < data.options.length; i++) {
         tpl += `<div class="game__option">
-                  <img src="${data.answers[i].image}" alt="Option ${i}" width="468" height="458">
+                  <img src="${data.options[i].image}" alt="Option ${i}" width="468" height="458">
                   <label class="game__answer game__answer--photo">
                     <input name="question${i}" type="radio" value="photo">
                     <span>Фотография</span>
@@ -25,16 +25,16 @@ const question = (data) => {
       }
       return tpl;
     };
-    gameContainer.innerHTML = `<p class="game__task">${data.task}</p>
+    gameContainer.innerHTML = `<p class="game__task">${questions[data.type]}</p>
           <form class="game__content">
             ${question1()}
             </div>
           </form>`;
-  } else if (data.task === game.questions[1]) {
-    gameContainer.innerHTML = `<p class="game__task">${data.task}</p>
+  } else if (data.type === taskType.WIDE) {
+    gameContainer.innerHTML = `<p class="game__task">${questions[data.type]}</p>
             <form class="game__content  game__content--wide">
               <div class="game__option">
-                <img src="${data.answers[0].image}" alt="Option 1" width="705" height="455">
+                <img src="${data.options[0].image}" alt="Option 1" width="705" height="455">
                 <label class="game__answer  game__answer--photo">
                   <input name="question1" type="radio" value="photo">
                   <span>Фотография</span>
@@ -45,17 +45,17 @@ const question = (data) => {
                 </label>
               </div>
             </form>`;
-  } else if (data.task === game.questions[2]) {
+  } else if (data.type === taskType.TRIPLE) {
     const question3 = () => {
       let tpl = '';
-      for (let i = 0; i < data.answers.length; i++) {
+      for (let i = 0; i < data.options.length; i++) {
         tpl += `<div class="game__option">
-                  <img src="${data.answers[i].image}" alt="Option ${i}" width="304" height="455">
+                  <img src="${data.options[i].image}" alt="Option ${i}" width="304" height="455">
                 </div>`;
       }
       return tpl;
     };
-    gameContainer.innerHTML = `<p class="game__task">${data.task}</p>
+    gameContainer.innerHTML = `<p class="game__task">${questions[data.type]}</p>
             <form class="game__content  game__content--triple">
               ${question3()}
             </form>`;

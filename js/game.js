@@ -6,6 +6,7 @@ import insertBlock from './page.js';
 import renderStats from './templates/status.js';
 import renderHeader from './templates/header.js';
 import renderQuestion from './templates/questions.js';
+import {screens} from './data/game-data.js';
 import {gameState, setScreen, getScreen, setTime, setLives} from './data/process.js';
 import statsScreen from './stats.js';
 
@@ -35,7 +36,7 @@ const nextQuestion = () => {
   container.removeEventListener('click', onClick);
 
   currentState = setScreen(currentState, currentState.currentQuestion + 1);
-  if (currentState.currentQuestion < (gameState.maxQuestions - 1)) {
+  if (currentState.currentQuestion < (screens.length - 1)) {
     updateQuestion(currentState);
     container.addEventListener('click', onClick);
     clearInterval(interval);
