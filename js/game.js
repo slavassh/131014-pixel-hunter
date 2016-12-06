@@ -39,8 +39,8 @@ const nextQuestion = () => {
   if (currentState.currentQuestion < (screens.length - 1)) {
     updateQuestion(currentState);
     container.addEventListener('click', onClick);
-    clearInterval(interval);
-    onStart();
+    currentState = setTime(currentState, gameState.time);
+    updateHeader(currentState);
   } else {
     onEnd();
   }
@@ -75,14 +75,10 @@ const onClick = (evt) => {
 
 container.addEventListener('click', onClick);
 
-export const onStart = () => {
-  currentState = setTime(currentState, gameState.time);
-  updateHeader(currentState);
-
+const onStart = () => {
   interval = setInterval(() => {
     currentState = setTime(currentState, currentState.time - 1);
     if (currentState.time === 0) {
-      clearInterval(interval);
       onFail();
       nextQuestion(currentState);
     }
@@ -91,6 +87,7 @@ export const onStart = () => {
 };
 
 const onEnd = () => {
+  clearInterval(interval);
   insertBlock(statsScreen);
 };
 

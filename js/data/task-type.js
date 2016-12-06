@@ -9,7 +9,7 @@ export const questions = [
 ];
 
 export const taskType = {
-  DOUBLE: 1,
-  WIDE: 2,
-  TRIPLE: 3
+  DOUBLE: 0,
+  WIDE: 1,
+  TRIPLE: 2
 };
