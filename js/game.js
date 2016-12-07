@@ -6,8 +6,8 @@ import insertBlock from './page.js';
 import renderStats from './templates/status.js';
 import renderHeader from './templates/header.js';
 import renderQuestion from './templates/questions.js';
-import {screens} from './data/game-data.js';
-import {gameState, setScreen, getScreen, setTime, setLives} from './data/process.js';
+import {gameState} from './data/game-data.js';
+import {setScreen, getScreen, setTime, setLives} from './data/process.js';
 import statsScreen from './stats.js';
 
 let currentState = gameState;
@@ -15,7 +15,7 @@ let interval = null;
 
 const gameElement = getElementFromTemplate('');
 const headerElement = renderHeader(currentState);
-const questionElement = renderQuestion(getScreen(currentState.currentQuestion));
+const questionElement = renderQuestion(getScreen(currentState.screenNumber));
 const statsElement = renderStats();
 
 gameElement.appendChild(headerElement);
@@ -27,7 +27,7 @@ const updateHeader = (state) => {
 };
 
 const updateQuestion = (state) => {
-  renderQuestion(getScreen(state.currentQuestion));
+  renderQuestion(getScreen(state.screenNumber));
 };
 
 const container = gameElement.querySelector('.game');
@@ -35,8 +35,8 @@ const container = gameElement.querySelector('.game');
 const nextQuestion = () => {
   container.removeEventListener('click', onClick);
 
-  currentState = setScreen(currentState, currentState.currentQuestion + 1);
-  if (currentState.currentQuestion < (screens.length - 1)) {
+  currentState = setScreen(currentState, currentState.screenNumber + 1);
+  if (currentState.screenNumber < (gameState.screens.length - 1)) {
     updateQuestion(currentState);
     container.addEventListener('click', onClick);
     currentState = setTime(currentState, gameState.time);

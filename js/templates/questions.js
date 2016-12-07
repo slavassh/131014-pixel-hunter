@@ -6,9 +6,9 @@ import {taskType, questions} from '../data/task-type.js';
 const gameContainer = document.createElement('div');
 gameContainer.classList.add('game');
 
-const question = (data) => {
+const screen = (data) => {
   if (data.type === taskType.DOUBLE) {
-    const question1 = () => {
+    const taskTypeTpl = () => {
       let tpl = '';
       for (let i = 0; i < data.options.length; i++) {
         tpl += `<div class="game__option">
@@ -27,7 +27,7 @@ const question = (data) => {
     };
     gameContainer.innerHTML = `<p class="game__task">${questions[data.type]}</p>
           <form class="game__content">
-            ${question1()}
+            ${taskTypeTpl()}
             </div>
           </form>`;
   } else if (data.type === taskType.WIDE) {
@@ -46,7 +46,7 @@ const question = (data) => {
               </div>
             </form>`;
   } else if (data.type === taskType.TRIPLE) {
-    const question3 = () => {
+    const taskTypeTpl = () => {
       let tpl = '';
       for (let i = 0; i < data.options.length; i++) {
         tpl += `<div class="game__option">
@@ -57,10 +57,10 @@ const question = (data) => {
     };
     gameContainer.innerHTML = `<p class="game__task">${questions[data.type]}</p>
             <form class="game__content  game__content--triple">
-              ${question3()}
+              ${taskTypeTpl()}
             </form>`;
   }
   return gameContainer;
 };
 
-export default question;
+export default screen;
