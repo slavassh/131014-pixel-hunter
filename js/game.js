@@ -1,8 +1,7 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import getElementFromTemplate from './getElement.js';
-import insertBlock from './page.js';
+import {getElementFromTemplate, insertBlock} from './utils.js';
 import renderStats from './templates/status.js';
 import renderHeader from './templates/header.js';
 import renderQuestion from './templates/questions.js';

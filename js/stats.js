@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import getElementFromTemplate from './getElement.js';
+import {getElementFromTemplate} from './utils.js';
 import status from './templates/status.js';
 
 const resume = {

@@ -1,10 +1,8 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import getElementFromTemplate from './getElement.js';
+import {getElementFromTemplate, insertBlock} from './utils.js';
 import greetingElement from './greeting.js';
-import insertBlock from './page.js';
-
 
 const introElement = getElementFromTemplate(
     `<div id="intro" class="intro">
