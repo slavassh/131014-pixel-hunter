@@ -8,8 +8,7 @@ export const getElementFromTemplate = (template) => {
   return node.cloneNode(true);
 };
 
-export const insertBlock = (element) => {
-  debugger;
+export const changeView = (element) => {
   let mainElement = document.getElementById('main');
   mainElement.innerHTML = '';
   return mainElement.appendChild(element);

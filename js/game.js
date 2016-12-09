@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {getElementFromTemplate, insertBlock} from './utils';
+import {getElementFromTemplate, changeView} from './utils';
 import renderStats from './templates/status';
 import renderHeader from './templates/header';
 import renderQuestion from './templates/questions';
@@ -87,11 +87,11 @@ const onStart = () => {
 
 const onEnd = () => {
   clearInterval(interval);
-  insertBlock(statsScreen);
+  changeView(statsScreen);
 };
 
 const screenUpdate = () => {
-  insertBlock(gameElement);
+  changeView(gameElement);
   onStart();
 };
 

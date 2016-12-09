@@ -1,11 +1,11 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {insertBlock} from '../utils';
-import greetingElement from '../greeting';
+import {changeView} from '../utils';
+import greetingView from './greeting-view';
 import AbstractView from './view';
 
-export default class IntroView extends AbstractView {
+class IntroView extends AbstractView {
   getMarkup() {
     return `
       <div id="intro" class="intro">
@@ -20,9 +20,11 @@ export default class IntroView extends AbstractView {
 
     const onClick = (evt) => {
       evt.preventDefault();
-      insertBlock(greetingElement);
+      changeView(greetingView.element);
     };
 
     greetingsButton.addEventListener('click', onClick);
   }
 }
+
+export default new IntroView();

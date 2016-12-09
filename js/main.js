@@ -1,5 +1,5 @@
-import introElement from './templates/intro';
-import {insertBlock} from './utils';
+import introView from './templates/intro-view';
+import {changeView} from './utils';
 
-insertBlock(introElement);
+changeView(introView.element);
 

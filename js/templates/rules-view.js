@@ -4,9 +4,8 @@
 import nextScreen from '../game';
 import AbstractView from './view';
 
-export default class RulesView extends AbstractView {
+class RulesView extends AbstractView {
   getMarkup() {
-    debugger;
     return `
       <header class="header">
         <div class="header__back">
@@ -37,6 +36,7 @@ export default class RulesView extends AbstractView {
   bindHandlers() {
     let rulesSubmit = this.element.querySelector('.rules__button');
 
+
     this.element.querySelector('.rules__input').onInput = function () {
       if (this.value) {
         rulesSubmit.removeAttribute('disabled');
@@ -53,3 +53,5 @@ export default class RulesView extends AbstractView {
     rulesSubmit.addEventListener('click', onSubmit);
   }
 }
+
+export default new RulesView();

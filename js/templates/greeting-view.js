@@ -1,8 +1,11 @@
-import {getElementFromTemplate, insertBlock} from './utils';
-import rulesElement from './templates/rules-view';
+import {changeView} from '../utils';
+import rulesView from './rules-view';
+import AbstractView from './view';
 
-const greetingElement = getElementFromTemplate(
-    `<div class="greeting  central--blur">
+class GreetingView extends AbstractView {
+  getMarkup() {
+    return `
+    <div class="greeting  central--blur">
       <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
       <h1 class="greeting__asterisk">*</h1>
       <div class="greeting__challenge">
@@ -14,16 +17,19 @@ const greetingElement = getElementFromTemplate(
           Помни, главное — смотреть очень внимательно.</p>
       </div>
       <div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div>
-    </div>`
-);
+    </div>`;
+  }
 
-const rulesArrow = greetingElement.querySelector('.greeting__continue');
+  bindHandlers() {
+    const rulesArrow = this.element.querySelector('.greeting__continue');
 
-const onClick = (evt) => {
-  evt.preventDefault();
-  insertBlock(rulesElement);
-};
+    const onClick = (evt) => {
+      evt.preventDefault();
+      changeView(rulesView.element);
+    };
 
-rulesArrow.addEventListener('click', onClick);
+    rulesArrow.addEventListener('click', onClick);
+  }
+}
 
-export default greetingElement;
+export default new GreetingView();
