@@ -9,19 +9,23 @@ const stats = {
   unknown: 'stats__result--unknown'
 };
 
-const list = `
-        <ul class="stats">
-          <li class="stats__result ${stats.wrong}"></li>
-          <li class="stats__result ${stats.slow}"></li>
-          <li class="stats__result ${stats.fast}"></li>
-          <li class="stats__result ${stats.correct}"></li>
-          <li class="stats__result ${stats.unknown}"></li>
-          <li class="stats__result ${stats.slow}"></li>
-          <li class="stats__result ${stats.unknown}"></li>
-          <li class="stats__result ${stats.fast}"></li>
-          <li class="stats__result ${stats.unknown}"></li>
-          <li class="stats__result ${stats.wrong}"></li>
-        </ul>
-      </div>`;
+const statsContainer = document.createElement('div');
 
-export default list;
+statsContainer.classList.add('stats');
+
+export default () => {
+  statsContainer.innerHTML = `<ul class="stats">
+    <li class="stats__result ${stats.wrong}"></li>
+    <li class="stats__result ${stats.slow}"></li>
+    <li class="stats__result ${stats.fast}"></li>
+    <li class="stats__result ${stats.correct}"></li>
+    <li class="stats__result ${stats.unknown}"></li>
+    <li class="stats__result ${stats.slow}"></li>
+    <li class="stats__result ${stats.unknown}"></li>
+    <li class="stats__result ${stats.fast}"></li>
+    <li class="stats__result ${stats.unknown}"></li>
+    <li class="stats__result ${stats.wrong}"></li>
+  </ul>`;
+  return statsContainer;
+};
+

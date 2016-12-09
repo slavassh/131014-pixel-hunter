@@ -2,7 +2,7 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import getElementFromTemplate from './getElement.js';
-import stats from './templates/status.js';
+import status from './templates/status.js';
 
 const resume = {
   head: 'Победа!',
@@ -75,7 +75,7 @@ const table1 = `
         <tr>
           <td class="result__number">${resume.result1.number}.</td>
           <td colspan="2">
-            ${stats}
+            ${status()}
           </td>
           <td class="result__points">×&nbsp;${resume.result1.stats.points}</td>
           <td class="result__total">${resume.result1.stats.total}</td>
@@ -110,7 +110,7 @@ const table2 = `<table class="result__table">
         <tr>
           <td class="result__number">${resume.result2.number}.</td>
           <td>
-            ${stats}
+            ${status()}
           </td>
           <td class="result__total"></td>
           <td class="result__total  result__total--final">${resume.result1.stats.total}</td>
@@ -121,7 +121,7 @@ const table3 = `<table class="result__table">
         <tr>
           <td class="result__number">${resume.result3.number}.</td>
           <td colspan="2">
-            ${stats}
+            ${status()}
           </td>
           <td class="result__points">×&nbsp;${resume.result3.stats.points}</td>
           <td class="result__total">${resume.result3.stats.total}</td>
