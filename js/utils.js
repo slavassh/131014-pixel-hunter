@@ -9,6 +9,7 @@ export const getElementFromTemplate = (template) => {
 };
 
 export const insertBlock = (element) => {
+  debugger;
   let mainElement = document.getElementById('main');
   mainElement.innerHTML = '';
   return mainElement.appendChild(element);

@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {taskType, questions} from '../data/task-type.js';
+import {taskType, questions} from '../data/task-type';
 
 const gameContainer = document.createElement('div');
 gameContainer.classList.add('game');

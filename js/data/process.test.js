@@ -1,8 +1,8 @@
 /**
  * Created by slavash on 01.12.2016.
  */
-import {setScreen, setLives, setTime} from './process.js';
-import {gameState} from './game-data.js';
+import {setScreen, setLives, setTime} from './process';
+import {gameState} from './game-data';
 import assert from 'assert';
 
 describe('setScreen', () => {

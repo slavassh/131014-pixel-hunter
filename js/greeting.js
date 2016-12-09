@@ -1,5 +1,5 @@
-import {getElementFromTemplate, insertBlock} from './utils.js';
-import rulesElement from './rules.js';
+import {getElementFromTemplate, insertBlock} from './utils';
+import rulesElement from './templates/rules-view';
 
 const greetingElement = getElementFromTemplate(
     `<div class="greeting  central--blur">

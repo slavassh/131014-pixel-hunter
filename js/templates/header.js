@@ -2,7 +2,7 @@
  * Created by Viacheslav on 27.11.2016.
  */
 
-import lives from './lives.js';
+import lives from './lives';
 
 const header = document.createElement('header');
 header.classList.add('header');

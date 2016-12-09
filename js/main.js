@@ -1,4 +1,5 @@
-import introElement from './intro.js';
-import {insertBlock} from './utils.js';
+import introElement from './templates/intro';
+import {insertBlock} from './utils';
 
 insertBlock(introElement);
+

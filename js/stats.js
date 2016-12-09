@@ -1,8 +1,8 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {getElementFromTemplate} from './utils.js';
-import status from './templates/status.js';
+import {getElementFromTemplate} from './utils';
+import status from './templates/status';
 
 const resume = {
   head: 'Победа!',

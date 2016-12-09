@@ -1,13 +1,13 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {getElementFromTemplate, insertBlock} from './utils.js';
-import renderStats from './templates/status.js';
-import renderHeader from './templates/header.js';
-import renderQuestion from './templates/questions.js';
-import {gameState} from './data/game-data.js';
-import {setScreen, getScreen, setTime, setLives} from './data/process.js';
-import statsScreen from './stats.js';
+import {getElementFromTemplate, insertBlock} from './utils';
+import renderStats from './templates/status';
+import renderHeader from './templates/header';
+import renderQuestion from './templates/questions';
+import {gameState} from './data/game-data';
+import {setScreen, getScreen, setTime, setLives} from './data/process';
+import statsScreen from './stats';
 
 let currentState = gameState;
 let interval = null;

@@ -1,14 +1,14 @@
 /**
  * Created by slavash on 01.12.2016.
  */
-import {gameState} from './game-data.js';
+import {gameState} from './game-data';
 
-export const setScreen = (game, question) => {
-  if (question < 0 || question >= gameState.screens.length) {
+export const setScreen = (game, screenNumber) => {
+  if (screenNumber < 0 || screenNumber >= gameState.screens.length) {
     throw new RangeError(`screenNumber ${gameState.screenNumber} is out of range of screens`);
   }
   return Object.assign({}, game, {
-    screenNumber: question
+    screenNumber: screenNumber
   });
 };
 
