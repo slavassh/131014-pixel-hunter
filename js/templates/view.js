@@ -6,6 +6,7 @@ export default class AbstractView {
     if (!this._element) {
       this._element = getElementFromTemplate(this.getMarkup());
       this.bindHandlers();
+      this.addClass();
     }
     return this._element;
   }
@@ -17,4 +18,6 @@ export default class AbstractView {
   bindHandlers() {}
 
   clearHandlers() {}
+
+  addClass() {}
 }

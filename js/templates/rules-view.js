@@ -36,9 +36,10 @@ class RulesView extends AbstractView {
   bindHandlers() {
     let rulesSubmit = this.element.querySelector('.rules__button');
 
+    let rulesInput = this.element.querySelector('.rules__input');
 
-    this.element.querySelector('.rules__input').onInput = function () {
-      if (this.value) {
+    const onNameInput = () => {
+      if (rulesInput.value) {
         rulesSubmit.removeAttribute('disabled');
       } else {
         rulesSubmit.setAttribute('disabled', '');
@@ -50,6 +51,7 @@ class RulesView extends AbstractView {
       nextScreen();
     };
 
+    rulesInput.addEventListener('input', onNameInput);
     rulesSubmit.addEventListener('click', onSubmit);
   }
 }
