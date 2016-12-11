@@ -11,7 +11,9 @@ class QuestionView extends AbstractView {
     this.data = TaskData;
   }
 
-  onUserChoice() {}
+  set onUserChoice(handler) {
+    this._onUserChoice = handler;
+  }
 
   getMarkup() {
     let tpl = '';
@@ -49,7 +51,7 @@ class QuestionView extends AbstractView {
       }
     }
 
-    return `   
+    return `
       <p class="game__task">${questions[this.data.type]}</p>
       <form class="game__content  ${typeClass[this.data.type]}">
         ${tpl}
@@ -58,6 +60,7 @@ class QuestionView extends AbstractView {
   }
 
   bindHandlers() {
+
     const onClick = (evt) => {
       let targetClass = '';
 
@@ -70,7 +73,7 @@ class QuestionView extends AbstractView {
       let target = evt.target;
       while (target !== this.element) {
         if (target.classList.contains(targetClass)) {
-          changeView(currentState);
+          this._onUserChoice(target.children[0].value);
           break;
         }
         target = target.parentNode;
@@ -78,7 +81,12 @@ class QuestionView extends AbstractView {
       evt.preventDefault();
     };
 
-    this.element.addEventListener('click', onClick);
+    const options = this.element.querySelector('.game__content').querySelectorAll('.game__option');
+
+    for (let i = 0; i < options.length; i++) {
+      const option = options[i];
+      option.addEventListener('click', onClick);
+    }
   }
 
   addClass() {

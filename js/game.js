@@ -1,37 +1,33 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {getElementFromTemplate, changeView} from './utils';
+import {changeView} from './utils';
 import renderStats from './templates/status';
-import renderHeader from './templates/header';
+import HeaderView from './templates/header-view';
 import QuestionView from './templates/question-view';
+import GameView from './templates/game-view';
 import {gameState} from './data/game-data';
 import {setScreen, getScreen, setTime, setLives} from './data/process';
 import statsScreen from './stats';
 
+const gameView = new GameView();
 let currentState = gameState;
 let interval = null;
 
-const gameElement = getElementFromTemplate('');
-const headerElement = renderHeader(currentState);
-const questionElement = new QuestionView(getScreen(currentState.screenNumber));
-const statsElement = renderStats();
-
-gameElement.appendChild(headerElement);
-gameElement.appendChild(questionElement.element);
-// questionElement.appendChild(statsElement);
-
 const updateHeader = (state) => {
-  renderHeader(state);
+  gameView.header = new HeaderView(state);
 };
 
-const updateQuestion = (state) => {
-  // new QuestionView(getScreen(state.screenNumber));
+const updateQuestion = (screen) => {
+  const questionView = new QuestionView(screen);
+  gameView.question = questionView;
+  questionView.onUserChoice = userChoiceHandler;
 };
 
-const container = gameElement.querySelector('.game');
+updateQuestion(getScreen(currentState.screenNumber));
 
-const nextQuestion = () => {
+const userChoiceHandler = (userChoice) => {
+  console.dir(userChoice);
   currentState = setScreen(currentState, currentState.screenNumber + 1);
   if (currentState.screenNumber < (gameState.screens.length - 1)) {
     updateQuestion(currentState);
@@ -49,15 +45,21 @@ const onFail = () => {
   }
 };
 
-const onStart = () => {
+const onStart = (state = gameState) => {
+  currentState = state;
+
+  screenUpdate();
+
   interval = setInterval(() => {
     currentState = setTime(currentState, currentState.time - 1);
     if (currentState.time === 0) {
       onFail();
-      nextQuestion(currentState);
+      userChoiceHandler(currentState);
     }
     updateHeader(currentState);
   }, 1000);
+
+  changeView(gameView.element);
 };
 
 const onEnd = () => {
@@ -65,16 +67,9 @@ const onEnd = () => {
   changeView(statsScreen);
 };
 
-/*const updateLevel = (level) => {
-  const levelView = new LevelView(level);
-  gameView.level = levelView;
-  levelView.onAnswer = answerHandler;
-};*/
-
-const screenUpdate = (screenNumber) => {
-/*  const QuestionView = new QuestionView(screenNumber);*/
-  changeView(gameElement);
-  onStart();
+const screenUpdate = () => {
+  updateHeader(currentState);
+  updateQuestion(getScreen(currentState.screenNumber));
 };
 
-export default screenUpdate;
+export default onStart;
