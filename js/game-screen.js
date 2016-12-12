@@ -25,7 +25,7 @@ const game = {
       gameModel.tick();
       if (gameModel.timeIsUp()) {
         game.onFail();
-        game.updateHeader();
+        game.userChoiceHandler();
       }
       game.updateHeader();
     }, 1000);
@@ -37,13 +37,14 @@ const game = {
   },
 
   updateHeader() {
-    const header = new HeaderView(GameModel.state);
+    const header = new HeaderView(gameModel.state);
     root.replaceChild(header.element, game.header.element);
     game.header = header;
   },
 
   updateQuestion() {
     game.updateHeader();
+    gameModel.resetTime();
 
     const questionView = new QuestionView(gameModel.getCurrentScreen());
     questionView.onUserChoice = game.userChoiceHandler;
@@ -60,12 +61,11 @@ const game = {
     gameModel.nextScreen();
     if (gameModel.state.screenNumber < (gameModel.state.screens.length - 1)) {
       game.updateQuestion();
-      gameModel.resetTime();
-      game.updateHeader();
     } else {
       game.onEnd();
     }
   },
+
   onFail() {
     gameModel.lostLife();
     if (gameModel.lostAllLives()) {

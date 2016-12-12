@@ -19,7 +19,7 @@ export default class GameModel {
   }
 
   lostLife() {
-    return setLives(this._state, this._state.livesCount - 1);
+    this._state = setLives(this._state, this._state.livesCount - 1);
   }
 
   nextScreen() {
@@ -27,7 +27,7 @@ export default class GameModel {
   }
 
   tick() {
-    this._state = setTime(this._state, this._state.time + 1);
+    this._state = setTime(this._state, this._state.time - 1);
   }
 
   resetTime() {

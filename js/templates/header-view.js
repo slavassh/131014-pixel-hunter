@@ -9,11 +9,6 @@ export default class HeaderView extends AbstractView {
     this.state = currentState;
   }
 
-  update(newState) {
-    this.state = newState;
-    this.element.innerHTML = this.getMarkup();
-  }
-
   _getHearts(currentState) {
     const MAX_LIVES = 3;
     const emptyHeartIcon = 'img/heart__empty.svg';
