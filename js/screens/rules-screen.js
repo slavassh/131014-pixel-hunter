@@ -1,8 +1,8 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import nextScreen from '../game';
-import AbstractView from './view';
+import startGame from '../game-screen';
+import AbstractView from '../templates/view';
 
 class RulesView extends AbstractView {
   getMarkup() {
@@ -48,7 +48,7 @@ class RulesView extends AbstractView {
 
     const onSubmit = (evt) => {
       evt.preventDefault();
-      nextScreen();
+      startGame();
     };
 
     rulesInput.addEventListener('input', onNameInput);

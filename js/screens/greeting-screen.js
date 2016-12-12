@@ -1,6 +1,6 @@
 import {changeView} from '../utils';
-import rulesView from './rules-view';
-import AbstractView from './view';
+import rulesView from './rules-screen';
+import AbstractView from '../templates/view';
 
 class GreetingView extends AbstractView {
   getMarkup() {

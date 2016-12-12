@@ -2,8 +2,8 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import {changeView} from '../utils';
-import greetingView from './greeting-view';
-import AbstractView from './view';
+import greetingView from './greeting-screen';
+import AbstractView from '../templates/view';
 
 class IntroView extends AbstractView {
   getMarkup() {
