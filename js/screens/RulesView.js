@@ -2,9 +2,9 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import startGame from '../game-screen';
-import AbstractView from '../templates/view';
+import AbstractView from '../templates/AbstractView';
 
-class RulesView extends AbstractView {
+export default class RulesView extends AbstractView {
   getMarkup() {
     return `
       <header class="header">
@@ -35,7 +35,6 @@ class RulesView extends AbstractView {
 
   bindHandlers() {
     let rulesSubmit = this.element.querySelector('.rules__button');
-
     let rulesInput = this.element.querySelector('.rules__input');
 
     const onNameInput = () => {
@@ -55,5 +54,3 @@ class RulesView extends AbstractView {
     rulesSubmit.addEventListener('click', onSubmit);
   }
 }
-
-export default new RulesView();

@@ -1,8 +1,8 @@
 import {changeView} from '../utils';
-import rulesView from './rules-screen';
-import AbstractView from '../templates/view';
+import RulesView from './RulesView';
+import AbstractView from '../templates/AbstractView';
 
-class GreetingView extends AbstractView {
+export default class GreetingView extends AbstractView {
   getMarkup() {
     return `
     <div class="greeting  central--blur">
@@ -25,11 +25,10 @@ class GreetingView extends AbstractView {
 
     const onClick = (evt) => {
       evt.preventDefault();
+      const rulesView = new RulesView();
       changeView(rulesView.element);
     };
 
     rulesArrow.addEventListener('click', onClick);
   }
 }
-
-export default new GreetingView();

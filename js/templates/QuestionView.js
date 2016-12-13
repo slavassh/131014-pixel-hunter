@@ -2,7 +2,7 @@
  * Created by Viacheslav on 27.11.2016.
  */
 import {taskType, questions, typeClass} from '../data/task-type';
-import AbstractView from './view';
+import AbstractView from './AbstractView';
 
 class QuestionView extends AbstractView {
 
@@ -35,11 +35,11 @@ class QuestionView extends AbstractView {
       tpl = `<div class="game__option">
                 <img src="${this.data.options[0].image}" alt="Option 1" width="705" height="455">
                 <label class="game__answer  game__answer--photo">
-                  <input name="question1" type="radio" value="photo">
+                  <input name="question0" type="radio" value="photo">
                   <span>Фотография</span>
                 </label>
                 <label class="game__answer  game__answer--wide  game__answer--paint">
-                  <input name="question1" type="radio" value="paint">
+                  <input name="question0" type="radio" value="paint">
                   <span>Рисунок</span>
                 </label>
               </div>`;
@@ -47,6 +47,7 @@ class QuestionView extends AbstractView {
       for (let i = 0; i < this.data.options.length; i++) {
         tpl += `<div class="game__option">
                    <img src="${this.data.options[i].image}" alt="Option ${i}" width="304" height="455">
+                   <input name="question${i}" type="radio" value="paint">
                    </div>`;
       }
     }
@@ -72,21 +73,32 @@ class QuestionView extends AbstractView {
 
       let target = evt.target;
       while (target !== this.element) {
-        if (target.classList.contains(targetClass)) {
-          this._onUserChoice(target.children[0].value);
+        if (target.classList.contains(targetClass) && isAllQuestionsAnswered()) {
+          this._onUserChoice(isAllAnswersCorrect());
           break;
         }
         target = target.parentNode;
       }
-      evt.preventDefault();
     };
 
-    const options = this.element.querySelector('.game__content').querySelectorAll('.game__option');
+    const getAnswers = () => {
+      let results = [];
+      let form = this.element.querySelector('form');
+      for (let i = 0; i < this.data.options.length; i++) {
+        results.push(form[`question${i}`].value);
+      }
+      return results;
+    };
 
-    for (let i = 0; i < options.length; i++) {
-      const option = options[i];
-      option.addEventListener('click', onClick);
-    }
+    const isAllQuestionsAnswered = () => {
+      return getAnswers().every((answer) => answer !== '');
+    };
+
+    const isAllAnswersCorrect = () => {
+      return getAnswers().every((answer, i) => answer === this.data.options[i].correct);
+    };
+
+    this.element.addEventListener('click', onClick);
   }
 
   addClass() {

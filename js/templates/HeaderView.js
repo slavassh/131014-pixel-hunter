@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import AbstractView from './view';
+import AbstractView from './AbstractView';
 
 export default class HeaderView extends AbstractView {
   constructor(currentState) {

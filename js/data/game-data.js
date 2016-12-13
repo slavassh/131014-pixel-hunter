@@ -4,6 +4,7 @@ export const gameState = {
   livesCount: 3,
   screenNumber: 0,
   time: 30,
+  answers: [],
   screens: [
     {
       type: taskType.DOUBLE,

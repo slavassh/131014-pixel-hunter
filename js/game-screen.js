@@ -4,9 +4,9 @@
 import {changeView} from './utils';
 import {getElementFromTemplate} from './utils';
 
-import HeaderView from './templates/header-view';
-import QuestionView from './templates/question-view';
-import GameModel from './data/game-model';
+import HeaderView from './templates/HeaderView';
+import QuestionView from './templates/QuestionView';
+import GameModel from './data/GameModel';
 import statsScreen from './stats';
 
 const gameModel = new GameModel();
@@ -57,7 +57,7 @@ const game = {
   },
 
   userChoiceHandler(userChoice) {
-
+    console.dir(userChoice);
     gameModel.nextScreen();
     if (gameModel.state.screenNumber < (gameModel.state.screens.length - 1)) {
       game.updateQuestion();

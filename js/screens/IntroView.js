@@ -2,10 +2,10 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import {changeView} from '../utils';
-import greetingView from './greeting-screen';
-import AbstractView from '../templates/view';
+import GreetingView from './GreetingView';
+import AbstractView from '../templates/AbstractView';
 
-class IntroView extends AbstractView {
+export default class IntroView extends AbstractView {
   getMarkup() {
     return `
       <div id="intro" class="intro">
@@ -20,6 +20,7 @@ class IntroView extends AbstractView {
 
     const onClick = (evt) => {
       evt.preventDefault();
+      const greetingView = new GreetingView();
       changeView(greetingView.element);
     };
 
@@ -27,4 +28,3 @@ class IntroView extends AbstractView {
   }
 }
 
-export default new IntroView();
