@@ -1,10 +1,10 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {getElementFromTemplate} from './utils';
-import status from './templates/status';
+import AbstractView from '../templates/AbstractView';
 
 const resume = {
+  progress: 'Здесь будет прогрессбар',
   head: 'Победа!',
   result1: {
     number: 1,
@@ -34,48 +34,34 @@ const resume = {
     },
     final: 950,
   },
-  result2: {
-    number: 2,
-    stats: {
-      total: 'fail',
-    }
-  },
-  result3: {
-    number: 3,
-    stats: {
-      points: 100,
-      total: 900,
-    },
-    extra: {
-      life: {
-        title: 'Бонус за жизни:',
-        points: 50,
-        count: 2,
-        total: 100,
-      }
-    },
-    final: 950
-  }
 };
 
-const header = `
-    <header class="header">
-      <div class="header__back">
-        <span class="back">
-          <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-          <img src="img/logo_small.png" width="101" height="44">
-        </span>
-      </div>
-    </header>`;
+export default class StatsView extends AbstractView {
+  constructor(currentState) {
+    super();
+    this.state = currentState;
+  }
 
-const headline = `<h1>${resume.head}</h1>`;
-
-const table1 = `
+  getMarkup() {
+    return `
+      <header class="header">
+        <div class="header__back">
+          <span class="back">
+            <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
+            <img src="img/logo_small.png" width="101" height="44">
+          </span>
+        </div>
+      </header>
+      
+      <div class="result">
+      
+      <h1>${resume.head}</h1>
+        
       <table class="result__table">
         <tr>
           <td class="result__number">${resume.result1.number}.</td>
           <td colspan="2">
-            ${status()}
+          ${resume.progress}
           </td>
           <td class="result__points">×&nbsp;${resume.result1.stats.points}</td>
           <td class="result__total">${resume.result1.stats.total}</td>
@@ -104,49 +90,7 @@ const table1 = `
         <tr>
           <td colspan="5" class="result__total  result__total--final">${resume.result1.final}</td>
         </tr>
-      </table>`;
-
-const table2 = `<table class="result__table">
-        <tr>
-          <td class="result__number">${resume.result2.number}.</td>
-          <td>
-            ${status()}
-          </td>
-          <td class="result__total"></td>
-          <td class="result__total  result__total--final">${resume.result1.stats.total}</td>
-        </tr>
-      </table>`;
-
-const table3 = `<table class="result__table">
-        <tr>
-          <td class="result__number">${resume.result3.number}.</td>
-          <td colspan="2">
-            ${status()}
-          </td>
-          <td class="result__points">×&nbsp;${resume.result3.stats.points}</td>
-          <td class="result__total">${resume.result3.stats.total}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="result__extra">${resume.result3.extra.life.title}</td>
-          <td class="result__extra">${resume.result3.extra.life.count}&nbsp;<span class="stats__result stats__result--heart"></span></td>
-          <td class="result__points">×&nbsp;${resume.result3.extra.life.points}</td>
-          <td class="result__total">${resume.result3.extra.life.total}</td>
-        </tr>
-        <tr>
-          <td colspan="5" class="result__total  result__total--final">${resume.result3.final}</td>
-        </tr>
-      </table>`;
-
-const screen = `
-      ${header}
-      <div class="result">
-        ${headline}
-        ${table1}
-        ${table2}
-        ${table3}
+      </table>  
       </div>`;
-
-const statsElement = getElementFromTemplate(screen);
-
-export default statsElement;
+  }
+}

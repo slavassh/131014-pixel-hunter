@@ -6,8 +6,9 @@ import {getElementFromTemplate} from './utils';
 
 import HeaderView from './templates/HeaderView';
 import QuestionView from './templates/QuestionView';
+import ProgressView from './templates/ProgressView';
 import GameModel from './data/GameModel';
-import statsScreen from './stats';
+import StatsView from './screens/StatsView';
 
 const gameModel = new GameModel();
 const root = getElementFromTemplate('');
@@ -15,6 +16,7 @@ const root = getElementFromTemplate('');
 const game = {
   header: new HeaderView(gameModel.state),
   content: new QuestionView(gameModel.getCurrentScreen()),
+  progress: new ProgressView(gameModel.state),
   interval: null,
 
   onStart() {
@@ -33,13 +35,20 @@ const game = {
 
   onEnd() {
     clearInterval(game.interval);
-    changeView(statsScreen);
+    const statsView = new StatsView(gameModel.state);
+    changeView(statsView.element);
   },
 
   updateHeader() {
     const header = new HeaderView(gameModel.state);
     root.replaceChild(header.element, game.header.element);
     game.header = header;
+  },
+
+  updateProgress() {
+    const progress = new ProgressView(gameModel.state);
+    game.content.element.replaceChild(progress.element, game.progress.element);
+    game.progress = progress;
   },
 
   updateQuestion() {
@@ -49,10 +58,12 @@ const game = {
     const questionView = new QuestionView(gameModel.getCurrentScreen());
     questionView.onUserChoice = game.userChoiceHandler;
     game.changeContentView(questionView);
+    game.updateProgress();
   },
 
   changeContentView(view) {
     root.replaceChild(view.element, game.content.element);
+    view.element.appendChild(game.progress.element);
     game.content = view;
   },
 
@@ -80,6 +91,7 @@ const game = {
 
 root.appendChild(game.header.element);
 root.appendChild(game.content.element);
+game.content.element.appendChild(game.progress.element);
 
 export default () => {
   game.onStart();

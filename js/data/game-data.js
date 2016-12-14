@@ -1,4 +1,4 @@
-import {taskType} from './task-type';
+import {TaskType} from './task-type';
 
 export const gameState = {
   livesCount: 3,
@@ -7,7 +7,7 @@ export const gameState = {
   answers: [],
   screens: [
     {
-      type: taskType.DOUBLE,
+      type: TaskType.DOUBLE,
       options: [
         {
           image: 'http://placehold.it/468x458',
@@ -20,7 +20,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.WIDE,
+      type: TaskType.WIDE,
       options: [
         {
           image: 'http://placehold.it/705x455',
@@ -29,7 +29,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: TaskType.TRIPLE,
       options: [
         {
           image: 'http://placehold.it/304x455',
@@ -46,7 +46,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.DOUBLE,
+      type: TaskType.DOUBLE,
       options: [
         {
           image: 'http://placehold.it/468x458',
@@ -59,7 +59,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.WIDE,
+      type: TaskType.WIDE,
       options: [
         {
           image: 'http://placehold.it/705x455',
@@ -68,7 +68,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: TaskType.TRIPLE,
       options: [
         {
           image: 'http://placehold.it/304x455',
@@ -85,7 +85,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.DOUBLE,
+      type: TaskType.DOUBLE,
       options: [
         {
           image: 'http://placehold.it/468x458',
@@ -98,7 +98,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.WIDE,
+      type: TaskType.WIDE,
       options: [
         {
           image: 'http://placehold.it/705x455',
@@ -107,7 +107,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: TaskType.TRIPLE,
       options: [
         {
           image: 'http://placehold.it/304x455',
@@ -124,7 +124,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.DOUBLE,
+      type: TaskType.DOUBLE,
       options: [
         {
           image: 'http://placehold.it/468x458',

@@ -1,14 +1,14 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {taskType, questions, typeClass} from '../data/task-type';
+import {TaskType, questions, typeClass} from '../data/task-type';
 import AbstractView from './AbstractView';
 
 class QuestionView extends AbstractView {
 
-  constructor(TaskData) {
+  constructor(questionData) {
     super();
-    this.data = TaskData;
+    this.data = questionData;
   }
 
   set onUserChoice(handler) {
@@ -17,7 +17,7 @@ class QuestionView extends AbstractView {
 
   getMarkup() {
     let tpl = '';
-    if (this.data.type === taskType.DOUBLE) {
+    if (this.data.type === TaskType.DOUBLE) {
       for (let i = 0; i < this.data.options.length; i++) {
         tpl += `<div class="game__option">
                   <img src="${this.data.options[i].image}" alt="Option ${i}" width="468" height="458">
@@ -31,7 +31,7 @@ class QuestionView extends AbstractView {
                   </label>
                 </div>`;
       }
-    } else if (this.data.type === taskType.WIDE) {
+    } else if (this.data.type === TaskType.WIDE) {
       tpl = `<div class="game__option">
                 <img src="${this.data.options[0].image}" alt="Option 1" width="705" height="455">
                 <label class="game__answer  game__answer--photo">
@@ -43,7 +43,7 @@ class QuestionView extends AbstractView {
                   <span>Рисунок</span>
                 </label>
               </div>`;
-    } else if (this.data.type === taskType.TRIPLE) {
+    } else if (this.data.type === TaskType.TRIPLE) {
       for (let i = 0; i < this.data.options.length; i++) {
         tpl += `<label class="game__option">
                    <img src="${this.data.options[i].image}" alt="Option ${i}" width="304" height="455">
@@ -67,7 +67,7 @@ class QuestionView extends AbstractView {
     const onClick = (evt) => {
       let targetClass = '';
 
-      if (this.data.type !== taskType.TRIPLE) {
+      if (this.data.type !== TaskType.TRIPLE) {
         targetClass = 'game__answer';
       } else {
         targetClass = 'game__option';
@@ -88,7 +88,7 @@ class QuestionView extends AbstractView {
 
       let form = this.element.querySelector('form');
       for (let i = 0; i < this.data.options.length; i++) {
-        if (this.data.type !== taskType.TRIPLE) {
+        if (this.data.type !== TaskType.TRIPLE) {
           results.push(form[`question${i}`].value);
         } else {
           results.push(form['question'].value);
