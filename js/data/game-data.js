@@ -33,15 +33,15 @@ export const gameState = {
       options: [
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint2'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint2'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'paint'
+          correct: 'paint2'
         },
       ]
     },
@@ -72,15 +72,15 @@ export const gameState = {
       options: [
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint1'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint1'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'paint'
+          correct: 'paint1'
         },
       ]
     },
@@ -111,33 +111,29 @@ export const gameState = {
       options: [
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint0'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint0'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'paint'
+          correct: 'paint0'
         },
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: taskType.DOUBLE,
       options: [
         {
-          image: 'http://placehold.it/304x455',
+          image: 'http://placehold.it/468x458',
           correct: 'photo'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'photo'
-        },
-        {
-          image: 'http://placehold.it/304x455',
+          image: 'http://placehold.it/468x458',
           correct: 'paint'
-        },
+        }
       ]
     }
   ]

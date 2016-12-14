@@ -45,10 +45,12 @@ class QuestionView extends AbstractView {
               </div>`;
     } else if (this.data.type === taskType.TRIPLE) {
       for (let i = 0; i < this.data.options.length; i++) {
-        tpl += `<div class="game__option">
+        tpl += `<label class="game__option">
                    <img src="${this.data.options[i].image}" alt="Option ${i}" width="304" height="455">
-                   <input name="question${i}" type="radio" value="paint">
-                   </div>`;
+                   <div class="game__answer">
+                    <input name="question" type="radio" value="paint${i}">
+                   </div>
+                 </label>`;
       }
     }
 
@@ -65,7 +67,7 @@ class QuestionView extends AbstractView {
     const onClick = (evt) => {
       let targetClass = '';
 
-      if (this.element.querySelector('.game__answer')) {
+      if (this.data.type !== taskType.TRIPLE) {
         targetClass = 'game__answer';
       } else {
         targetClass = 'game__option';
@@ -83,9 +85,14 @@ class QuestionView extends AbstractView {
 
     const getAnswers = () => {
       let results = [];
+
       let form = this.element.querySelector('form');
       for (let i = 0; i < this.data.options.length; i++) {
-        results.push(form[`question${i}`].value);
+        if (this.data.type !== taskType.TRIPLE) {
+          results.push(form[`question${i}`].value);
+        } else {
+          results.push(form['question'].value);
+        }
       }
       return results;
     };

@@ -57,9 +57,13 @@ const game = {
   },
 
   userChoiceHandler(userChoice) {
-    console.dir(userChoice);
+    if (userChoice) {
+      gameModel.saveUserTime();
+    } else {
+      gameModel.saveUserFail();
+    }
     gameModel.nextScreen();
-    if (gameModel.state.screenNumber < (gameModel.state.screens.length - 1)) {
+    if (gameModel.state.screenNumber < (gameModel.state.screens.length)) {
       game.updateQuestion();
     } else {
       game.onEnd();

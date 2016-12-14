@@ -2,7 +2,7 @@
  * Created by slavash on 12.12.2016.
  */
 
-import {setScreen, getScreen, setTime, setLives} from './process';
+import {setScreen, getScreen, setTime, setLives, setScreenResult} from './process';
 import {gameState} from './game-data';
 
 export default class GameModel {
@@ -40,5 +40,13 @@ export default class GameModel {
 
   timeIsUp() {
     return this._state.time <= 0;
+  }
+
+  saveUserTime() {
+    this._state = setScreenResult(this._state, this._state.time);
+  }
+
+  saveUserFail() {
+    this._state = setScreenResult(this._state, false);
   }
 }
