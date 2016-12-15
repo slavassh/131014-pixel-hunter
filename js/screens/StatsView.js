@@ -12,31 +12,19 @@ export default class StatsView extends AbstractView {
   }
 
   isGameOverTitle() {
-    let title = '';
-    if (this.state.livesCount > 0) {
-      title = StatsTitle.WIN;
-    } else {
-      title = StatsTitle.LOSE;
-    }
-    return title;
+    return this.state.livesCount > 0 ? StatsTitle.WIN : StatsTitle.LOSE;
   }
 
   getCorrectCount() {
-    return this.state.answers.filter((time) => {
-      return time > 0;
-    });
+    return this.state.answers.filter((time) => time > 0);
   }
 
   getFastCount() {
-    return this.state.answers.filter((time) => {
-      return time > 20;
-    });
+    return this.state.answers.filter((time) => time > 20);
   }
 
   getSlowCount() {
-    return this.state.answers.filter((time) => {
-      return time < 10 && time !== false;
-    });
+    return this.state.answers.filter((time) => time < 10 && time !== false);
   }
 
   getStatsCount() {

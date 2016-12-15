@@ -26,7 +26,6 @@ const game = {
     game.interval = setInterval(() => {
       gameModel.tick();
       if (gameModel.isTimeOver()) {
-        game.onFail();
         game.userChoiceHandler();
       }
       game.updateHeader();
