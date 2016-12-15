@@ -14,8 +14,6 @@ export const setScreen = (game, screenNumber) => {
 
 export const getScreen = (num) => gameState.screens[num];
 
-export const hasScreen = (num) => typeof gameState.screens[num] !== void 0;
-
 export const setLives = (game, lives) => {
   if (lives < 0 || lives > gameState.livesCount) {
     throw new RangeError(`livesCount = ${lives}. livesCount can't be negative or > max number of lives`);

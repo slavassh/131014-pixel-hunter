@@ -2,7 +2,7 @@
  * Created by slavash on 12.12.2016.
  */
 
-import {setScreen, getScreen, setTime, setLives, setScreenResult, hasScreen} from './process';
+import {setScreen, getScreen, setTime, setLives, setScreenResult} from './process';
 import {gameState} from './game-data';
 
 export default class GameModel {
@@ -27,7 +27,7 @@ export default class GameModel {
   }
 
   hasNextScreen() {
-    return hasScreen(this._state.screenNumber + 1);
+    return this._state.screenNumber + 1 < this._state.screens.length;
   }
 
   tick() {
