@@ -2,39 +2,8 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import AbstractView from '../templates/AbstractView';
-
-const resume = {
-  progress: 'Здесь будет прогрессбар',
-  head: 'Победа!',
-  result1: {
-    number: 1,
-    stats: {
-      points: 100,
-      total: 900,
-    },
-    extra: {
-      speed: {
-        title: 'Бонус за скорость:',
-        points: 50,
-        count: 1,
-        total: 50
-      },
-      life: {
-        title: 'Бонус за жизни:',
-        points: 50,
-        count: 2,
-        total: 100,
-      },
-      slow: {
-        title: 'Штраф за медлительность:',
-        points: 50,
-        count: 2,
-        total: -100,
-      }
-    },
-    final: 950,
-  },
-};
+import {Extra, extraClassName, extraTitle, Points, StatsTitle} from '../data/type-data';
+import ProgressView from '../templates/ProgressView';
 
 export default class StatsView extends AbstractView {
   constructor(currentState) {
@@ -42,32 +11,75 @@ export default class StatsView extends AbstractView {
     this.state = currentState;
   }
 
-  isGameOver() {
-    return this.state.livesCount > 0;
+  isGameOverTitle() {
+    let title = '';
+    if (this.state.livesCount > 0) {
+      title = StatsTitle.WIN;
+    } else {
+      title = StatsTitle.LOSE;
+    }
+    return title;
   }
 
   getCorrectCount() {
-    const correctArr = this.state.answers.filter((time) => {
+    return this.state.answers.filter((time) => {
       return time > 0;
     });
-    return correctArr;
   }
 
   getFastCount() {
-    const fastArr = this.state.answers.filter((time) => {
+    return this.state.answers.filter((time) => {
       return time > 20;
     });
-    return fastArr;
   }
 
   getSlowCount() {
-    const slowArr = this.state.answers.filter((time) => {
-      return time < 10;
+    return this.state.answers.filter((time) => {
+      return time < 10 && time !== false;
     });
-    return slowArr;
+  }
+
+  getStatsCount() {
+    const statsCount = [];
+
+    statsCount[Extra.FAST] = this.getFastCount().length;
+    statsCount[Extra.LIFE] = this.state.livesCount;
+    statsCount[Extra.SLOW] = this.getSlowCount().length;
+
+    return statsCount;
+  }
+
+  getFinal() {
+    const statsCount = this.getStatsCount();
+    return this.getCorrectCount().length * Points.CORRECT
+                                          + Points.BONUS * (statsCount[Extra.FAST] + statsCount[Extra.LIFE])
+                                          - Points.BONUS * statsCount[Extra.SLOW];
+  }
+
+  getExtra() {
+    const statsCount = this.getStatsCount();
+
+    let tpl = '';
+    for (let i = 0; i < statsCount.length; i++) {
+      if (statsCount[i]) {
+        tpl += `<tr>
+        <td></td>
+        <td class="result__extra">${extraTitle.get(i)}</td>
+        <td class="result__extra">
+          ${statsCount[i]}&nbsp;
+          <span class="stats__result ${extraClassName.get(i)}"></span>
+        </td>
+        <td class="result__points">×&nbsp;${Points.BONUS}</td>
+        <td class="result__total">${statsCount[i] * Points.BONUS}</td>
+      </tr>`;
+      }
+    }
+    return tpl;
   }
 
   getMarkup() {
+    const progressView = new ProgressView(this.state);
+
     return `
       <header class="header">
         <div class="header__back">
@@ -80,40 +92,20 @@ export default class StatsView extends AbstractView {
       
       <div class="result">
       
-      <h1>${resume.head}</h1>
+      <h1>${this.isGameOverTitle()}</h1>
         
       <table class="result__table">
         <tr>
-          <td class="result__number">${resume.result1.number}.</td>
+          <td class="result__number">1.</td>
           <td colspan="2">
-          ${resume.progress}
+          ${progressView.getMarkup()}
           </td>
-          <td class="result__points">×&nbsp;${resume.result1.stats.points}</td>
-          <td class="result__total">${resume.result1.stats.total}</td>
+          <td class="result__points">×&nbsp;${Points.CORRECT}</td>
+          <td class="result__total">${this.getCorrectCount().length * Points.CORRECT}</td>
         </tr>
+        ${this.getExtra()}
         <tr>
-          <td></td>
-          <td class="result__extra">${resume.result1.extra.speed.title}</td>
-          <td class="result__extra">${resume.result1.extra.speed.count}&nbsp;<span class="stats__result stats__result--fast"></span></td>
-          <td class="result__points">×&nbsp;${resume.result1.extra.speed.points}</td>
-          <td class="result__total">${resume.result1.extra.speed.total}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="result__extra">${resume.result1.extra.life.title}</td>
-          <td class="result__extra">${resume.result1.extra.life.count}&nbsp;<span class="stats__result stats__result--heart"></span></td>
-          <td class="result__points">×&nbsp;${resume.result1.extra.life.points}</td>
-          <td class="result__total">${resume.result1.extra.life.total}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="result__extra">${resume.result1.extra.slow.title}</td>
-          <td class="result__extra">${resume.result1.extra.slow.count}&nbsp;<span class="stats__result stats__result--slow"></span></td>
-          <td class="result__points">×&nbsp;${resume.result1.extra.slow.points}</td>
-          <td class="result__total">${resume.result1.extra.slow.total}</td>
-        </tr>
-        <tr>
-          <td colspan="5" class="result__total  result__total--final">${resume.result1.final}</td>
+          <td colspan="5" class="result__total  result__total--final">${this.getFinal()}</td>
         </tr>
       </table>  
       </div>`;
