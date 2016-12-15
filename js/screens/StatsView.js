@@ -42,6 +42,31 @@ export default class StatsView extends AbstractView {
     this.state = currentState;
   }
 
+  isGameOver() {
+    return this.state.livesCount > 0;
+  }
+
+  getCorrectCount() {
+    const correctArr = this.state.answers.filter((time) => {
+      return time > 0;
+    });
+    return correctArr;
+  }
+
+  getFastCount() {
+    const fastArr = this.state.answers.filter((time) => {
+      return time > 20;
+    });
+    return fastArr;
+  }
+
+  getSlowCount() {
+    const slowArr = this.state.answers.filter((time) => {
+      return time < 10;
+    });
+    return slowArr;
+  }
+
   getMarkup() {
     return `
       <header class="header">

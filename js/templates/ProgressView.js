@@ -2,7 +2,22 @@
  * Created by slavash on 25.11.2016.
  */
 import AbstractView from './AbstractView';
-import {Result, progressClassName} from '../data/task-type';
+import {Result, progressClassName} from '../data/type-data';
+
+let parseAnswer = (answer) => {
+  if (answer === void 0) {
+    return Result.UNKNOWN;
+  } else if (answer === false) {
+    return Result.WRONG;
+  } else if (answer > 20) {
+    return Result.FAST;
+  } else if (answer >= 10 && answer <= 20) {
+    return Result.CORRECT;
+  } else if (answer < 10) {
+    return Result.SLOW;
+  }
+  return answer;
+};
 
 export default class ProgressView extends AbstractView {
   constructor(currentState) {
@@ -11,23 +26,10 @@ export default class ProgressView extends AbstractView {
   }
 
   getStats() {
-    let result;
-    let tpl = '';
-    for (let i = 0; i < this.state.screens.length; i++) {
-      if (this.answers[i] === false) {
-        result = Result.WRONG;
-      } else if (this.answers[i] === 'unknown') {
-        result = Result.UNKNOWN;
-      } else if (this.answers[i] > 20) {
-        result = Result.FAST;
-      } else if (this.answers[i] >= 10 && this.answers[i] <= 20) {
-        result = Result.CORRECT;
-      } else if (this.answers[i] < 10) {
-        result = Result.SLOW;
-      }
-      tpl += `<li class="stats__result  ${progressClassName.get(result)}"></li>`;
-    }
-    return tpl;
+    return this.state.screens.map((screen, i) => {
+      const className = progressClassName.get(parseAnswer(this.state.answers[i]));
+      return `<li class="stats__result  ${className}"></li>`;
+    }).join('');
   }
 
   getMarkup() {

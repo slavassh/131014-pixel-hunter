@@ -18,8 +18,7 @@ export default class IntroView extends AbstractView {
   bindHandlers() {
     const greetingsButton = this.element.querySelector('.intro__asterisk');
 
-    const onClick = (evt) => {
-      evt.preventDefault();
+    const onClick = () => {
       const greetingView = new GreetingView();
       changeView(greetingView.element);
     };

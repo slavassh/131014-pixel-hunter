@@ -25,7 +25,7 @@ const game = {
 
     game.interval = setInterval(() => {
       gameModel.tick();
-      if (gameModel.timeIsUp()) {
+      if (gameModel.isTimeOver()) {
         game.onFail();
         game.userChoiceHandler();
       }
@@ -69,12 +69,13 @@ const game = {
 
   userChoiceHandler(userChoice) {
     if (userChoice) {
-      gameModel.saveUserTime();
+      gameModel.addScreenResult();
     } else {
-      gameModel.saveUserFail();
+      gameModel.addUserFail();
+      game.onFail();
     }
-    gameModel.nextScreen();
-    if (gameModel.state.screenNumber < (gameModel.state.screens.length)) {
+    if (gameModel.hasNextScreen()) {
+      gameModel.nextScreen();
       game.updateQuestion();
     } else {
       game.onEnd();
@@ -83,7 +84,7 @@ const game = {
 
   onFail() {
     gameModel.lostLife();
-    if (gameModel.lostAllLives()) {
+    if (!gameModel.hasLives()) {
       game.onEnd();
     }
   }

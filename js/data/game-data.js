@@ -1,4 +1,4 @@
-import {TaskType} from './task-type';
+import {TaskType} from './type-data';
 
 export const gameState = {
   livesCount: 3,

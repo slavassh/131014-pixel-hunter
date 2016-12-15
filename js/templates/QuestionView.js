@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {TaskType, questions, typeClass} from '../data/task-type';
+import {TaskType, questions, typeClass} from '../data/type-data';
 import AbstractView from './AbstractView';
 
 class QuestionView extends AbstractView {
