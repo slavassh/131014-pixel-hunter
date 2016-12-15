@@ -1,4 +1,7 @@
-import introElement from './intro.js';
-import insertBlock from './page.js';
+import IntroView from './screens/IntroView';
+import {changeView} from './utils';
 
-insertBlock(introElement);
+const introView = new IntroView();
+
+changeView(introView.element);
+

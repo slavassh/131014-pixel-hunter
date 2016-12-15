@@ -1,12 +1,13 @@
-import {taskType} from './task-type.js';
+import {TaskType} from './type-data';
 
 export const gameState = {
   livesCount: 3,
   screenNumber: 0,
   time: 30,
+  answers: [],
   screens: [
     {
-      type: taskType.DOUBLE,
+      type: TaskType.DOUBLE,
       options: [
         {
           image: 'http://placehold.it/468x458',
@@ -19,7 +20,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.WIDE,
+      type: TaskType.WIDE,
       options: [
         {
           image: 'http://placehold.it/705x455',
@@ -28,24 +29,24 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: TaskType.TRIPLE,
       options: [
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint2'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint2'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'paint'
+          correct: 'paint2'
         },
       ]
     },
     {
-      type: taskType.DOUBLE,
+      type: TaskType.DOUBLE,
       options: [
         {
           image: 'http://placehold.it/468x458',
@@ -58,7 +59,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.WIDE,
+      type: TaskType.WIDE,
       options: [
         {
           image: 'http://placehold.it/705x455',
@@ -67,24 +68,24 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: TaskType.TRIPLE,
       options: [
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint1'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint1'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'paint'
+          correct: 'paint1'
         },
       ]
     },
     {
-      type: taskType.DOUBLE,
+      type: TaskType.DOUBLE,
       options: [
         {
           image: 'http://placehold.it/468x458',
@@ -97,7 +98,7 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.WIDE,
+      type: TaskType.WIDE,
       options: [
         {
           image: 'http://placehold.it/705x455',
@@ -106,37 +107,33 @@ export const gameState = {
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: TaskType.TRIPLE,
       options: [
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint0'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'photo'
+          correct: 'paint0'
         },
         {
           image: 'http://placehold.it/304x455',
-          correct: 'paint'
+          correct: 'paint0'
         },
       ]
     },
     {
-      type: taskType.TRIPLE,
+      type: TaskType.DOUBLE,
       options: [
         {
-          image: 'http://placehold.it/304x455',
+          image: 'http://placehold.it/468x458',
           correct: 'photo'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'photo'
-        },
-        {
-          image: 'http://placehold.it/304x455',
+          image: 'http://placehold.it/468x458',
           correct: 'paint'
-        },
+        }
       ]
     }
   ]
