@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import startGame from '../game-screen';
+import startGame from '../GamePresenter';
 import AbstractView from '../templates/AbstractView';
 
 export default class RulesView extends AbstractView {

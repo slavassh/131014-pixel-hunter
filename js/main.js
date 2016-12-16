@@ -1,7 +1,4 @@
-import IntroView from './screens/IntroView';
-import {changeView} from './utils';
+import Application from './Application';
 
-const introView = new IntroView();
-
-changeView(introView.element);
+Application.showIntro();
 
