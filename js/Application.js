@@ -6,6 +6,7 @@ import IntroView from './screens/IntroView';
 import GreetingView from './screens/GreetingView';
 import RulesView from './screens/RulesView';
 import StatsView from './screens/StatsView';
+import GamePresenter from './GamePresenter';
 
 const main = document.getElementById('main');
 const changeView = (element) => {
@@ -25,12 +26,19 @@ export default class Application {
     changeView(greetingView.element);
   }
 
+  static showRules() {
+    const rulesView = new RulesView();
+    changeView(rulesView.element);
+  }
+
   static showGame() {
-    changeView(newGame());
+    const gamePresenter = new GamePresenter();
+    gamePresenter.onStart();
+    changeView(gamePresenter.root);
   }
 
   static showStats(stats) {
-    changeView(showStats(stats))
+    const statsView = new StatsView(stats);
+    changeView(statsView.element);
   }
-
 }

@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import startGame from '../GamePresenter';
+import Application from '../Application';
 import AbstractView from '../templates/AbstractView';
 
 export default class RulesView extends AbstractView {
@@ -47,7 +47,7 @@ export default class RulesView extends AbstractView {
 
     const onSubmit = (evt) => {
       evt.preventDefault();
-      startGame();
+      Application.showGame();
     };
 
     rulesInput.addEventListener('input', onNameInput);

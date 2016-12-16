@@ -1,5 +1,4 @@
-import {changeView} from '../utils';
-import RulesView from './RulesView';
+import Application from '../Application';
 import AbstractView from '../templates/AbstractView';
 
 export default class GreetingView extends AbstractView {
@@ -25,8 +24,7 @@ export default class GreetingView extends AbstractView {
 
     const onClick = (evt) => {
       evt.preventDefault();
-      const rulesView = new RulesView();
-      changeView(rulesView.element);
+      Application.showRules();
     };
 
     rulesArrow.addEventListener('click', onClick);

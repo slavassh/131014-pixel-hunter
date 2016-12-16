@@ -1,18 +1,16 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {changeView} from './utils';
 import {getElementFromTemplate} from './utils';
-
 import HeaderView from './templates/HeaderView';
 import QuestionView from './templates/QuestionView';
 import ProgressView from './templates/ProgressView';
 import GameModel from './data/GameModel';
-import StatsView from './screens/StatsView';
+import Application from './Application';
 
 const gameModel = new GameModel();
 
-class GamePresenter {
+export default class GamePresenter {
 
   constructor() {
     this.header = new HeaderView(gameModel.state);
@@ -33,7 +31,7 @@ class GamePresenter {
     this.interval = setInterval(() => {
       gameModel.tick();
       if (gameModel.isTimeOver()) {
-        this.userChoiceHandler();
+        this.onUserChoice();
       }
       this.updateHeader();
     }, 1000);
@@ -41,8 +39,7 @@ class GamePresenter {
 
   onEnd() {
     clearInterval(this.interval);
-    const statsView = new StatsView(gameModel.state);
-    changeView(statsView.element);
+    Application.showStats(gameModel.state);
   }
 
   updateHeader() {
@@ -62,7 +59,7 @@ class GamePresenter {
     gameModel.resetTime();
 
     const questionView = new QuestionView(gameModel.getCurrentScreen());
-    questionView.onUserChoice = this.userChoiceHandler.bind(this);
+    questionView.onUserChoice = this.onUserChoice.bind(this);
     this.changeContentView(questionView);
     this.updateProgress();
   }
@@ -73,7 +70,7 @@ class GamePresenter {
     this.content = view;
   }
 
-  userChoiceHandler(userChoice) {
+  onUserChoice(userChoice) {
     if (userChoice) {
       gameModel.addScreenResult();
     } else {
@@ -96,10 +93,3 @@ class GamePresenter {
     }
   }
 }
-
-const gamePresenter = new GamePresenter();
-
-export default () => {
-  gamePresenter.onStart();
-  changeView(gamePresenter.root);
-};
