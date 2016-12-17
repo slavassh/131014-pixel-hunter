@@ -1,7 +1,6 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {getElementFromTemplate} from './utils';
 import HeaderView from './templates/HeaderView';
 import QuestionView from './templates/QuestionView';
 import ProgressView from './templates/ProgressView';
@@ -17,7 +16,7 @@ export default class GamePresenter {
     this.content = new QuestionView(gameModel.getCurrentScreen());
     this.progress = new ProgressView(gameModel.state);
 
-    this.root = getElementFromTemplate('');
+    this.root = document.createElement('div');
     this.root.appendChild(this.header.element);
     this.root.appendChild(this.content.element);
     this.content.element.appendChild(this.progress.element);
@@ -41,13 +40,18 @@ export default class GamePresenter {
     }, 1000);
   }
 
-  onEnd() {
+  stopTimer() {
     clearInterval(this.interval);
+  }
+
+  onEnd() {
+    this.stopTimer();
     Application.showStats(gameModel.state);
   }
 
   updateHeader() {
     const header = new HeaderView(gameModel.state);
+    header.stopTimer = this.stopTimer.bind(this);
     this.root.replaceChild(header.element, this.header.element);
     this.header = header;
   }

@@ -2,7 +2,14 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import AbstractView from '../templates/AbstractView';
-import {Extra, extraClassName, extraTitle, Points, StatsTitle} from '../data/type-data';
+import {
+  Extra,
+  extraClassName,
+  extraTitle,
+  Points,
+  StatsTitle,
+  extraPoints
+} from '../data/type-data';
 import ProgressView from '../templates/ProgressView';
 import Application from '../Application';
 
@@ -16,50 +23,46 @@ export default class StatsView extends AbstractView {
     return this.state.livesCount > 0 ? StatsTitle.WIN : StatsTitle.LOSE;
   }
 
-  getCorrectCount() {
-    return this.state.answers.filter((time) => time > 0);
-  }
-
-  getFastCount() {
-    return this.state.answers.filter((time) => time > 20);
-  }
-
-  getSlowCount() {
-    return this.state.answers.filter((time) => time < 10 && time !== false);
-  }
-
-  getStatsCount() {
+  getExtraCount() {
     const statsCount = [];
 
-    statsCount[Extra.FAST] = this.getFastCount().length;
+    statsCount[Extra.FAST] = this.state.answers.filter((time) => time > 20).length;
     statsCount[Extra.LIFE] = this.state.livesCount;
-    statsCount[Extra.SLOW] = this.getSlowCount().length;
+    statsCount[Extra.SLOW] = this.state.answers.filter((time) => time < 10 && time !== false).length;
 
     return statsCount;
   }
 
-  getFinal() {
-    const statsCount = this.getStatsCount();
-    return this.getCorrectCount().length * Points.CORRECT
-                                          + Points.BONUS * (statsCount[Extra.FAST] + statsCount[Extra.LIFE])
-                                          - Points.BONUS * statsCount[Extra.SLOW];
+  getExtraPoints() {
+    const statsCount = this.getExtraCount();
+
+    return statsCount.map((item, i) => extraPoints.get(i) * statsCount[i]);
+  }
+
+  getCorrectPoints() {
+    const correctCount = this.state.answers.filter((time) => time > 0);
+    return correctCount.length * Points.CORRECT;
+  }
+
+  getFinalPoints() {
+    return this.getCorrectPoints() + this.getExtraPoints().reduce((sum, current) => sum + current);
   }
 
   getExtra() {
-    const statsCount = this.getStatsCount();
+    const extraCount = this.getExtraCount();
 
     let tpl = '';
-    for (let i = 0; i < statsCount.length; i++) {
-      if (statsCount[i]) {
+    for (let i = 0; i < extraCount.length; i++) {
+      if (extraCount[i]) {
         tpl += `<tr>
         <td></td>
         <td class="result__extra">${extraTitle.get(i)}</td>
         <td class="result__extra">
-          ${statsCount[i]}&nbsp;
+          ${extraCount[i]}&nbsp;
           <span class="stats__result ${extraClassName.get(i)}"></span>
         </td>
-        <td class="result__points">×&nbsp;${Points.BONUS}</td>
-        <td class="result__total">${statsCount[i] * Points.BONUS}</td>
+        <td class="result__points">×&nbsp;${Math.abs(extraPoints.get(i))}</td>
+        <td class="result__total">${this.getExtraPoints()[i]}</td>
       </tr>`;
       }
     }
@@ -90,11 +93,11 @@ export default class StatsView extends AbstractView {
           ${progressView.getMarkup()}
           </td>
           <td class="result__points">×&nbsp;${Points.CORRECT}</td>
-          <td class="result__total">${this.getCorrectCount().length * Points.CORRECT}</td>
+          <td class="result__total">${this.getCorrectPoints()}</td>
         </tr>
         ${this.getExtra()}
         <tr>
-          <td colspan="5" class="result__total  result__total--final">${this.getFinal()}</td>
+          <td colspan="5" class="result__total  result__total--final">${this.getFinalPoints()}</td>
         </tr>
       </table>  
       </div>`;

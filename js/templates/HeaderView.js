@@ -3,6 +3,7 @@
  */
 import AbstractView from './AbstractView';
 import Application from '../Application';
+import {gameState} from '../data/game-data';
 
 export default class HeaderView extends AbstractView {
   constructor(currentState) {
@@ -10,8 +11,10 @@ export default class HeaderView extends AbstractView {
     this.state = currentState;
   }
 
+  stopTimer() {}
+
   _getHearts(currentState) {
-    const MAX_LIVES = 3;
+    const MAX_LIVES = gameState.livesCount;
     const emptyHeartIcon = 'img/heart__empty.svg';
     const fullHeartIcon = 'img/heart__full.svg';
 
@@ -46,6 +49,7 @@ export default class HeaderView extends AbstractView {
     backLinkLogo.style.cursor = 'pointer';
 
     const onBackClick = () => {
+      this.stopTimer();
       Application.showGame();
     };
 

@@ -52,6 +52,12 @@ export const Extra = {
   SLOW: 2
 };
 
+export const extraPoints = new Map([
+  [Extra.FAST, Points.BONUS],
+  [Extra.LIFE, Points.BONUS],
+  [Extra.SLOW, -Points.BONUS]
+]);
+
 export const extraClassName = new Map([
   [Extra.FAST, 'stats__result--fast'],
   [Extra.LIFE, 'stats__result--heart'],
