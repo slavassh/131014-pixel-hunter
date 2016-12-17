@@ -38,6 +38,10 @@ export default class GameModel {
     this._state = setTime(this._state, gameState.time);
   }
 
+  resetGameState() {
+    this._state = gameState;
+  }
+
   hasLives() {
     return this._state.livesCount > 0;
   }

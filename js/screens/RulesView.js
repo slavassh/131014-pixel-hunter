@@ -34,8 +34,15 @@ export default class RulesView extends AbstractView {
   }
 
   bindHandlers() {
-    let rulesSubmit = this.element.querySelector('.rules__button');
-    let rulesInput = this.element.querySelector('.rules__input');
+    const rulesBack = this.element.querySelector('.header__back');
+    const rulesSubmit = this.element.querySelector('.rules__button');
+    const rulesInput = this.element.querySelector('.rules__input');
+
+    rulesBack.style.cursor = 'pointer';
+
+    const onBackClick = () => {
+      Application.showGreeting();
+    };
 
     const onNameInput = () => {
       if (rulesInput.value) {
@@ -50,6 +57,7 @@ export default class RulesView extends AbstractView {
       Application.showGame();
     };
 
+    rulesBack.addEventListener('click', onBackClick);
     rulesInput.addEventListener('input', onNameInput);
     rulesSubmit.addEventListener('click', onSubmit);
   }

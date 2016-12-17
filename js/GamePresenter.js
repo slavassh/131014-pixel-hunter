@@ -26,7 +26,11 @@ export default class GamePresenter {
   }
 
   onStart() {
+    gameModel.resetGameState();
+
+    this.updateHeader();
     this.updateQuestion();
+    this.updateProgress();
 
     this.interval = setInterval(() => {
       gameModel.tick();

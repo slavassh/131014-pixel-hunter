@@ -4,6 +4,7 @@
 import AbstractView from '../templates/AbstractView';
 import {Extra, extraClassName, extraTitle, Points, StatsTitle} from '../data/type-data';
 import ProgressView from '../templates/ProgressView';
+import Application from '../Application';
 
 export default class StatsView extends AbstractView {
   constructor(currentState) {
@@ -71,10 +72,10 @@ export default class StatsView extends AbstractView {
     return `
       <header class="header">
         <div class="header__back">
-          <span class="back">
+          <a title="Переиграть" class="back">
             <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
             <img src="img/logo_small.png" width="101" height="44">
-          </span>
+          </a>
         </div>
       </header>
       
@@ -97,5 +98,17 @@ export default class StatsView extends AbstractView {
         </tr>
       </table>  
       </div>`;
+  }
+
+  bindHandlers() {
+    const backLinkLogo = this.element.querySelector('.header__back');
+
+    backLinkLogo.style.cursor = 'pointer';
+
+    const onBackClick = () => {
+      Application.showGame();
+    };
+
+    backLinkLogo.addEventListener('click', onBackClick);
   }
 }

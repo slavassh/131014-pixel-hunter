@@ -2,6 +2,7 @@
  * Created by Viacheslav on 27.11.2016.
  */
 import AbstractView from './AbstractView';
+import Application from '../Application';
 
 export default class HeaderView extends AbstractView {
   constructor(currentState) {
@@ -30,10 +31,24 @@ export default class HeaderView extends AbstractView {
             <img src="img/logo_small.png" width="101" height="44">
           </span>
         </div>
-        <h1 class="game__timer">${this.state.time}</h1>
-        <div class="game__lives">
-          ${this._getHearts(this.state)}
-        </div>
+        <div>
+          <h1 class="game__timer">${this.state.time}</h1>
+          </div>
+          <div class="game__lives">
+            ${this._getHearts(this.state)}
+         </div>
       </header>`;
+  }
+
+  bindHandlers() {
+    const backLinkLogo = this.element.querySelector('.header__back');
+
+    backLinkLogo.style.cursor = 'pointer';
+
+    const onBackClick = () => {
+      Application.showGame();
+    };
+
+    backLinkLogo.addEventListener('click', onBackClick);
   }
 }
