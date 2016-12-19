@@ -2,6 +2,8 @@
  * Created by Viacheslav on 27.11.2016.
  */
 import AbstractView from './AbstractView';
+import Application from '../Application';
+import {gameState} from '../data/game-data';
 
 export default class HeaderView extends AbstractView {
   constructor(currentState) {
@@ -9,8 +11,12 @@ export default class HeaderView extends AbstractView {
     this.state = currentState;
   }
 
+  setStopTimerCallback(callback) {
+    this.stopTimer = callback;
+  }
+
   _getHearts(currentState) {
-    const MAX_LIVES = 3;
+    const MAX_LIVES = gameState.livesCount;
     const emptyHeartIcon = 'img/heart__empty.svg';
     const fullHeartIcon = 'img/heart__full.svg';
 
@@ -30,10 +36,27 @@ export default class HeaderView extends AbstractView {
             <img src="img/logo_small.png" width="101" height="44">
           </span>
         </div>
-        <h1 class="game__timer">${this.state.time}</h1>
-        <div class="game__lives">
-          ${this._getHearts(this.state)}
-        </div>
+        <div>
+          <h1 class="game__timer">${this.state.time}</h1>
+          </div>
+          <div class="game__lives">
+            ${this._getHearts(this.state)}
+         </div>
       </header>`;
+  }
+
+  bindHandlers() {
+    const backLinkLogo = this.element.querySelector('.header__back');
+
+    backLinkLogo.style.cursor = 'pointer';
+
+    const onBackClick = () => {
+      if (this.stopTimer()) {
+        this.stopTimer();
+      }
+      Application.showGame();
+    };
+
+    backLinkLogo.addEventListener('click', onBackClick);
   }
 }

@@ -1,8 +1,8 @@
 /**
  * Created by Viacheslav on 20.11.2016.
  */
-import {changeView} from '../utils';
-import GreetingView from './GreetingView';
+
+import Application from '../Application';
 import AbstractView from '../templates/AbstractView';
 
 export default class IntroView extends AbstractView {
@@ -19,8 +19,7 @@ export default class IntroView extends AbstractView {
     const greetingsButton = this.element.querySelector('.intro__asterisk');
 
     const onClick = () => {
-      const greetingView = new GreetingView();
-      changeView(greetingView.element);
+      Application.showGreeting();
     };
 
     greetingsButton.addEventListener('click', onClick);

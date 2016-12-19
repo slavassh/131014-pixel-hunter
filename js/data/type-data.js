@@ -14,12 +14,6 @@ export const TaskType = {
   TRIPLE: 2
 };
 
-export const typeClass = [
-  'game__content--double',
-  'game__content--wide',
-  'game__content--triple'
-];
-
 export const Result = {
   CORRECT: 0,
   WRONG: 1,
@@ -27,14 +21,6 @@ export const Result = {
   FAST: 3,
   UNKNOWN: 4
 };
-
-export const progressClassName = new Map([
-  [Result.CORRECT, 'stats__result--correct'],
-  [Result.WRONG, 'stats__result--wrong'],
-  [Result.SLOW, 'stats__result--slow'],
-  [Result.FAST, 'stats__result--fast'],
-  [Result.UNKNOWN, 'stats__result--unknown']
-]);
 
 export const Points = {
   CORRECT: 100,
@@ -52,10 +38,10 @@ export const Extra = {
   SLOW: 2
 };
 
-export const extraClassName = new Map([
-  [Extra.FAST, 'stats__result--fast'],
-  [Extra.LIFE, 'stats__result--heart'],
-  [Extra.SLOW, 'stats__result--slow']
+export const extraPoints = new Map([
+  [Extra.FAST, Points.BONUS],
+  [Extra.LIFE, Points.BONUS],
+  [Extra.SLOW, -Points.BONUS]
 ]);
 
 export const extraTitle = new Map([
