@@ -11,7 +11,9 @@ export default class HeaderView extends AbstractView {
     this.state = currentState;
   }
 
-  stopTimer() {}
+  setStopTimerCallback(callback) {
+    this.stopTimer = callback;
+  }
 
   _getHearts(currentState) {
     const MAX_LIVES = gameState.livesCount;
@@ -49,7 +51,9 @@ export default class HeaderView extends AbstractView {
     backLinkLogo.style.cursor = 'pointer';
 
     const onBackClick = () => {
-      this.stopTimer();
+      if (this.stopTimer()) {
+        this.stopTimer();
+      }
       Application.showGame();
     };
 

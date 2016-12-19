@@ -12,14 +12,14 @@ const gameModel = new GameModel();
 export default class GamePresenter {
 
   constructor() {
-    this.header = new HeaderView(gameModel.state);
-    this.content = new QuestionView(gameModel.getCurrentScreen());
-    this.progress = new ProgressView(gameModel.state);
+    this.headerView = new HeaderView(gameModel.state);
+    this.contentView = new QuestionView(gameModel.getCurrentScreen());
+    this.progressView = new ProgressView(gameModel.state);
 
     this.root = document.createElement('div');
-    this.root.appendChild(this.header.element);
-    this.root.appendChild(this.content.element);
-    this.content.element.appendChild(this.progress.element);
+    this.root.appendChild(this.headerView.element);
+    this.root.appendChild(this.contentView.element);
+    this.contentView.element.appendChild(this.progressView.element);
 
     this.interval = null;
   }
@@ -51,15 +51,15 @@ export default class GamePresenter {
 
   updateHeader() {
     const header = new HeaderView(gameModel.state);
-    header.stopTimer = this.stopTimer.bind(this);
-    this.root.replaceChild(header.element, this.header.element);
-    this.header = header;
+    header.setStopTimerCallback(this.stopTimer.bind(this));
+    this.root.replaceChild(header.element, this.headerView.element);
+    this.headerView = header;
   }
 
   updateProgress() {
     const progress = new ProgressView(gameModel.state);
-    this.content.element.replaceChild(progress.element, this.progress.element);
-    this.progress = progress;
+    this.contentView.element.replaceChild(progress.element, this.progressView.element);
+    this.progressView = progress;
   }
 
   updateQuestion() {
@@ -73,9 +73,9 @@ export default class GamePresenter {
   }
 
   changeContentView(view) {
-    this.root.replaceChild(view.element, this.content.element);
-    view.element.appendChild(this.progress.element);
-    this.content = view;
+    this.root.replaceChild(view.element, this.contentView.element);
+    view.element.appendChild(this.progressView.element);
+    this.contentView = view;
   }
 
   onUserChoice(userChoice) {
@@ -83,20 +83,13 @@ export default class GamePresenter {
       gameModel.addScreenResult();
     } else {
       gameModel.addUserFail();
-      this.onFail();
+      gameModel.lostLife();
     }
 
-    if (gameModel.hasNextScreen()) {
+    if (gameModel.hasNextScreen() && gameModel.hasLives()) {
       gameModel.nextScreen();
       this.updateQuestion();
     } else {
-      this.onEnd();
-    }
-  }
-
-  onFail() {
-    gameModel.lostLife();
-    if (!gameModel.hasLives()) {
       this.onEnd();
     }
   }

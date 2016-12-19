@@ -1,14 +1,21 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {TaskType, questions, typeClass} from '../data/type-data';
+import {TaskType, questions} from '../data/type-data';
 import AbstractView from './AbstractView';
+
+
 
 class QuestionView extends AbstractView {
 
   constructor(questionData) {
     super();
     this.model = questionData;
+    this.typeClass = [
+      'game__content--double',
+      'game__content--wide',
+      'game__content--triple'
+    ];
   }
 
   set onUserChoice(handler) {
@@ -56,7 +63,7 @@ class QuestionView extends AbstractView {
 
     return `
       <p class="game__task">${questions[this.model.type]}</p>
-      <form class="game__content  ${typeClass[this.model.type]}">
+      <form class="game__content  ${this.typeClass[this.model.type]}">
         ${tpl}
         </div>
       </form>`;

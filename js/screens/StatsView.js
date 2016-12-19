@@ -4,7 +4,6 @@
 import AbstractView from '../templates/AbstractView';
 import {
   Extra,
-  extraClassName,
   extraTitle,
   Points,
   StatsTitle,
@@ -17,6 +16,11 @@ export default class StatsView extends AbstractView {
   constructor(currentState) {
     super();
     this.state = currentState;
+    this.extraClassName = new Map([
+      [Extra.FAST, 'stats__result--fast'],
+      [Extra.LIFE, 'stats__result--heart'],
+      [Extra.SLOW, 'stats__result--slow']
+    ]);
   }
 
   isGameOverTitle() {
@@ -59,7 +63,7 @@ export default class StatsView extends AbstractView {
         <td class="result__extra">${extraTitle.get(i)}</td>
         <td class="result__extra">
           ${extraCount[i]}&nbsp;
-          <span class="stats__result ${extraClassName.get(i)}"></span>
+          <span class="stats__result ${this.extraClassName.get(i)}"></span>
         </td>
         <td class="result__points">×&nbsp;${Math.abs(extraPoints.get(i))}</td>
         <td class="result__total">${this.getExtraPoints()[i]}</td>
