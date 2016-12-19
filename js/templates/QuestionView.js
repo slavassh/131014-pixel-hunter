@@ -4,8 +4,6 @@
 import {TaskType, questions} from '../data/type-data';
 import AbstractView from './AbstractView';
 
-
-
 class QuestionView extends AbstractView {
 
   constructor(questionData) {
