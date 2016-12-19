@@ -30,9 +30,9 @@ export default class StatsView extends AbstractView {
   getExtraCount() {
     const statsCount = [];
 
-    statsCount[Extra.FAST] = this.state.answers.filter((time) => time > 20).length;
+    statsCount[Extra.FAST] = this.state.userAnswers.filter((time) => time > 20).length;
     statsCount[Extra.LIFE] = this.state.livesCount;
-    statsCount[Extra.SLOW] = this.state.answers.filter((time) => time < 10 && time !== false).length;
+    statsCount[Extra.SLOW] = this.state.userAnswers.filter((time) => time < 10 && time !== false).length;
 
     return statsCount;
   }
@@ -44,7 +44,7 @@ export default class StatsView extends AbstractView {
   }
 
   getCorrectPoints() {
-    const correctCount = this.state.answers.filter((time) => time > 0);
+    const correctCount = this.state.userAnswers.filter((time) => time > 0);
     return correctCount.length * Points.CORRECT;
   }
 

@@ -21,37 +21,38 @@ class QuestionView extends AbstractView {
   }
 
   getMarkup() {
+    const answers = this.model.answers;
     let tpl = '';
     if (this.model.type === TaskType.DOUBLE) {
-      for (let i = 0; i < this.model.options.length; i++) {
+      for (let i = 0; i < answers.length; i++) {
         tpl += `<div class="game__option">
-                  <img src="${this.model.options[i].image}" alt="Option ${i}" width="468" height="458">
+                  <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
                   <label class="game__answer game__answer--photo">
                     <input name="question${i}" type="radio" value="photo">
                     <span>Фотография</span>
                   </label>
                   <label class="game__answer game__answer--paint">
-                    <input name="question${i}" type="radio" value="paint">
+                    <input name="question${i}" type="radio" value="painting">
                     <span>Рисунок</span>
                   </label>
                 </div>`;
       }
     } else if (this.model.type === TaskType.WIDE) {
       tpl = `<div class="game__option">
-                <img src="${this.model.options[0].image}" alt="Option 1" width="705" height="455">
+                <img src="${answers[0].image.url}" alt="Option 1" width="${answers[0].image.width}" height="${answers[0].image.height}">
                 <label class="game__answer  game__answer--photo">
                   <input name="question0" type="radio" value="photo">
                   <span>Фотография</span>
                 </label>
                 <label class="game__answer  game__answer--wide  game__answer--paint">
-                  <input name="question0" type="radio" value="paint">
+                  <input name="question0" type="radio" value="painting">
                   <span>Рисунок</span>
                 </label>
               </div>`;
     } else if (this.model.type === TaskType.TRIPLE) {
-      for (let i = 0; i < this.model.options.length; i++) {
+      for (let i = 0; i < answers.length; i++) {
         tpl += `<label class="game__option">
-                   <img src="${this.model.options[i].image}" alt="Option ${i}" width="304" height="455">
+                   <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
                    <div class="game__answer">
                     <input name="question" type="radio" value="paint${i}">
                    </div>
@@ -92,7 +93,7 @@ class QuestionView extends AbstractView {
       let results = [];
 
       let form = this.element.querySelector('form');
-      for (let i = 0; i < this.model.options.length; i++) {
+      for (let i = 0; i < this.model.answers.length; i++) {
         if (this.model.type !== TaskType.TRIPLE) {
           results.push(form[`question${i}`].value);
         } else {
@@ -107,7 +108,7 @@ class QuestionView extends AbstractView {
     };
 
     const isAllAnswersCorrect = () => {
-      return getAnswers().every((answer, i) => answer === this.model.options[i].correct);
+      return getAnswers().every((answer, i) => answer === this.model.answers[i].type);
     };
 
     this.element.addEventListener('click', onClick);

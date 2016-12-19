@@ -4,135 +4,215 @@ export const gameState = {
   livesCount: 3,
   screenNumber: 0,
   time: 30,
-  answers: [],
+  userAnswers: [],
   screens: [
     {
-      type: TaskType.DOUBLE,
-      options: [
+      'type': TaskType.DOUBLE,
+      'answers': [
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'photo'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'photo'
         },
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'paint'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'painting'
         }
       ]
     },
     {
-      type: TaskType.WIDE,
-      options: [
+      'type': TaskType.WIDE,
+      'answers': [
         {
-          image: 'http://placehold.it/705x455',
-          correct: 'paint'
+          'image': {
+            'url': 'http://placehold.it/705x455',
+            'width': '705',
+            'height': '455'
+          },
+          'type': 'painting'
         }
       ]
     },
     {
-      type: TaskType.TRIPLE,
-      options: [
+      'type': TaskType.TRIPLE,
+      'answers': [
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint2'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint2'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint2'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint2'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint2'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint2'
         },
       ]
     },
     {
-      type: TaskType.DOUBLE,
-      options: [
+      'type': TaskType.DOUBLE,
+      'answers': [
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'photo'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'photo'
         },
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'paint'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'painting'
         }
       ]
     },
     {
-      type: TaskType.WIDE,
-      options: [
+      'type': TaskType.WIDE,
+      'answers': [
         {
-          image: 'http://placehold.it/705x455',
-          correct: 'paint'
+          'image': {
+            'url': 'http://placehold.it/705x455',
+            'width': '705',
+            'height': '455'
+          },
+          'type': 'painting'
         }
       ]
     },
     {
-      type: TaskType.TRIPLE,
-      options: [
+      'type': TaskType.TRIPLE,
+      'answers': [
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint1'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint1'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint1'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint1'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint1'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint1'
         },
       ]
     },
     {
-      type: TaskType.DOUBLE,
-      options: [
+      'type': TaskType.DOUBLE,
+      'answers': [
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'photo'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'photo'
         },
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'paint'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'painting'
         }
       ]
     },
     {
-      type: TaskType.WIDE,
-      options: [
+      'type': TaskType.WIDE,
+      'answers': [
         {
-          image: 'http://placehold.it/705x455',
-          correct: 'paint'
+          'image': {
+            'url': 'http://placehold.it/705x455',
+            'width': '705',
+            'height': '455'
+          },
+          'type': 'painting'
         }
       ]
     },
     {
-      type: TaskType.TRIPLE,
-      options: [
+      'type': TaskType.TRIPLE,
+      'answers': [
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint0'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint0'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint0'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint0'
         },
         {
-          image: 'http://placehold.it/304x455',
-          correct: 'paint0'
+          'image': {
+            'url': 'http://placehold.it/304x455',
+            'width': '304',
+            'height': '455'
+          },
+          'type': 'paint0'
         },
       ]
     },
     {
-      type: TaskType.DOUBLE,
-      options: [
+      'type': TaskType.DOUBLE,
+      'answers': [
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'photo'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'photo'
         },
         {
-          image: 'http://placehold.it/468x458',
-          correct: 'paint'
+          'image': {
+            'url': 'http://placehold.it/468x458',
+            'width': '468',
+            'height': '458'
+          },
+          'type': 'painting'
         }
       ]
     }

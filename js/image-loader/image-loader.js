@@ -31,7 +31,7 @@ export default (element) => {
 
         image.onerror = reject;
 
-        image.src = myImage.url;
+        image.src = myImage.image;
       }).then((img) => resizer.resize(img)).then((img) => element.parentNode.replaceChild(img, element));
     }
   };

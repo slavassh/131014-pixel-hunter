@@ -34,10 +34,10 @@ export const setTime = (game, time) => {
 };
 
 export const setScreenResult = (game, result) => {
-  let arr = game.answers.slice(0);
+  let arr = game.userAnswers.slice(0);
   arr.push(result);
   return Object.assign({}, game, {
-    answers: arr
+    userAnswers: arr
   });
 };
 
