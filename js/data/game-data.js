@@ -1,5 +1,3 @@
-import {TaskType} from './type-data';
-
 export const gameState = {
   livesCount: 3,
   screenNumber: 0,
@@ -7,7 +5,8 @@ export const gameState = {
   userAnswers: [],
   screens: [
     {
-      'type': TaskType.DOUBLE,
+      'type': 'two-of-two',
+      'question': 'Угадайте для каждого изображения фото или рисунок?',
       'answers': [
         {
           'image': {
@@ -28,7 +27,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.WIDE,
+      'type': 'tinder-like',
+      'question': 'Угадай, фото или рисунок?',
       'answers': [
         {
           'image': {
@@ -41,7 +41,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.TRIPLE,
+      'type': 'one-of-three',
+      'question': 'Найдите рисунок среди изображений',
       'answers': [
         {
           'image': {
@@ -70,7 +71,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.DOUBLE,
+      'type': 'two-of-two',
+      'question': 'Угадайте для каждого изображения фото или рисунок?',
       'answers': [
         {
           'image': {
@@ -91,7 +93,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.WIDE,
+      'type': 'tinder-like',
+      'question': 'Угадай, фото или рисунок?',
       'answers': [
         {
           'image': {
@@ -104,7 +107,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.TRIPLE,
+      'type': 'one-of-three',
+      'question': 'Найдите фото среди изображений',
       'answers': [
         {
           'image': {
@@ -133,7 +137,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.DOUBLE,
+      'type': 'two-of-two',
+      'question': 'Угадайте для каждого изображения фото или рисунок?',
       'answers': [
         {
           'image': {
@@ -154,7 +159,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.WIDE,
+      'type': 'tinder-like',
+      'question': 'Угадай, фото или рисунок?',
       'answers': [
         {
           'image': {
@@ -167,7 +173,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.TRIPLE,
+      'type': 'one-of-three',
+      'question': 'Найдите фото среди изображений',
       'answers': [
         {
           'image': {
@@ -196,7 +203,8 @@ export const gameState = {
       ]
     },
     {
-      'type': TaskType.DOUBLE,
+      'type': 'two-of-two',
+      'question': 'Угадайте для каждого изображения фото или рисунок?',
       'answers': [
         {
           'image': {

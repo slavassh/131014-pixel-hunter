@@ -34,7 +34,7 @@ export default class ProgressView extends AbstractView {
 
   getStats() {
     return this.state.screens.map((screen, i) => {
-      const className = this.progressClassName.get(parseAnswer(this.state.answers[i]));
+      const className = this.progressClassName.get(parseAnswer(this.state.userAnswers[i]));
       return `<li class="stats__result  ${className}"></li>`;
     }).join('');
   }

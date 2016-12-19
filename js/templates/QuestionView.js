@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {TaskType, questions} from '../data/type-data';
+import {TaskType} from '../data/type-data';
 import AbstractView from './AbstractView';
 
 class QuestionView extends AbstractView {
@@ -9,11 +9,11 @@ class QuestionView extends AbstractView {
   constructor(questionData) {
     super();
     this.model = questionData;
-    this.typeClass = [
-      'game__content--double',
-      'game__content--wide',
-      'game__content--triple'
-    ];
+    this.typeClass = new Map([
+      [TaskType.TWO_OF_TWO, 'game__content--double'],
+      [TaskType.TINDER_LIKE, 'game__content--wide'],
+      [TaskType.ONE_OF_THREE, 'game__content--triple']
+    ]);
   }
 
   set onUserChoice(handler) {
@@ -23,7 +23,7 @@ class QuestionView extends AbstractView {
   getMarkup() {
     const answers = this.model.answers;
     let tpl = '';
-    if (this.model.type === TaskType.DOUBLE) {
+    if (this.model.type === TaskType.TWO_OF_TWO) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<div class="game__option">
                   <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
@@ -37,7 +37,7 @@ class QuestionView extends AbstractView {
                   </label>
                 </div>`;
       }
-    } else if (this.model.type === TaskType.WIDE) {
+    } else if (this.model.type === TaskType.TINDER_LIKE) {
       tpl = `<div class="game__option">
                 <img src="${answers[0].image.url}" alt="Option 1" width="${answers[0].image.width}" height="${answers[0].image.height}">
                 <label class="game__answer  game__answer--photo">
@@ -49,7 +49,7 @@ class QuestionView extends AbstractView {
                   <span>Рисунок</span>
                 </label>
               </div>`;
-    } else if (this.model.type === TaskType.TRIPLE) {
+    } else if (this.model.type === TaskType.ONE_OF_THREE) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<label class="game__option">
                    <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
@@ -61,8 +61,8 @@ class QuestionView extends AbstractView {
     }
 
     return `
-      <p class="game__task">${questions[this.model.type]}</p>
-      <form class="game__content  ${this.typeClass[this.model.type]}">
+      <p class="game__task">${this.model.question}</p>
+      <form class="game__content  ${this.typeClass.get(this.model.type)}">
         ${tpl}
         </div>
       </form>`;
@@ -73,7 +73,7 @@ class QuestionView extends AbstractView {
     const onClick = (evt) => {
       let targetClass = '';
 
-      if (this.model.type !== TaskType.TRIPLE) {
+      if (this.model.type !== TaskType.ONE_OF_THREE) {
         targetClass = 'game__answer';
       } else {
         targetClass = 'game__option';
@@ -94,7 +94,7 @@ class QuestionView extends AbstractView {
 
       let form = this.element.querySelector('form');
       for (let i = 0; i < this.model.answers.length; i++) {
-        if (this.model.type !== TaskType.TRIPLE) {
+        if (this.model.type !== TaskType.ONE_OF_THREE) {
           results.push(form[`question${i}`].value);
         } else {
           results.push(form['question'].value);
