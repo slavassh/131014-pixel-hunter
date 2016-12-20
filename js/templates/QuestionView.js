@@ -1,7 +1,7 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {TaskType} from '../data/type-data';
+import {TaskType, AnswerType} from '../data/type-data';
 import AbstractView from './AbstractView';
 
 class QuestionView extends AbstractView {
@@ -64,6 +64,18 @@ class QuestionView extends AbstractView {
         ${tpl}
         </div>
       </form>`;
+  }
+
+  getTripleCorrect() {
+    const optionOne = this.model.answers.filter((answer) => answer === AnswerType.PAINTING);
+    const optionTwo = this.model.answers.filter((answer) => answer === AnswerType.PHOTO);
+    let correct;
+    if (optionOne.length < optionTwo.length) {
+      correct = optionOne;
+    } else {
+      correct = optionTwo;
+    }
+    return correct[0];
   }
 
   bindHandlers() {
