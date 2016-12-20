@@ -51,11 +51,9 @@ class QuestionView extends AbstractView {
               </div>`;
     } else if (this.model.type === TaskType.ONE_OF_THREE) {
       for (let i = 0; i < answers.length; i++) {
-        tpl += `<label class="game__option">
+        tpl += `<label class="game__option" for="question${i}">
                    <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
-                   <div class="game__answer">
-                    <input name="question" type="radio" value="paint${i}">
-                   </div>
+                   <input id="question${i}" name="question${i}" type="checkbox" value="painting">                   
                  </label>`;
       }
     }
@@ -70,22 +68,9 @@ class QuestionView extends AbstractView {
 
   bindHandlers() {
 
-    const onClick = (evt) => {
-      let targetClass = '';
-
-      if (this.model.type !== TaskType.ONE_OF_THREE) {
-        targetClass = 'game__answer';
-      } else {
-        targetClass = 'game__option';
-      }
-
-      let target = evt.target;
-      while (target !== this.element) {
-        if (target.classList.contains(targetClass) && isAllQuestionsAnswered()) {
-          this._onUserChoice(isAllAnswersCorrect());
-          break;
-        }
-        target = target.parentNode;
+    const onClick = () => {
+      if (isAllQuestionsAnswered()) {
+        this._onUserChoice(isAllAnswersCorrect());
       }
     };
 
@@ -95,7 +80,7 @@ class QuestionView extends AbstractView {
       let form = this.element.querySelector('form');
       for (let i = 0; i < this.model.answers.length; i++) {
         if (this.model.type !== TaskType.ONE_OF_THREE) {
-          results.push(form[`question${i}`].value);
+          results.push(form[`question${i}`].checked);
         } else {
           results.push(form['question'].value);
         }
