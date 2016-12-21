@@ -6,8 +6,9 @@ import {setScreen, getScreen, setTime, setLives, setScreenResult} from './proces
 import {gameState} from './game-data';
 
 export default class GameModel {
-  constructor(state = gameState) {
+  constructor(data, state = gameState) {
     this._state = state;
+    this.data = data;
   }
 
   get state() {
@@ -27,7 +28,7 @@ export default class GameModel {
   }
 
   hasNextScreen() {
-    return this._state.screenNumber + 1 < this._state.screens.length;
+    return this._state.screenNumber + 1 < this.data.screens.length;
   }
 
   tick() {

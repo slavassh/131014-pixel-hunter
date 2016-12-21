@@ -7,12 +7,15 @@ import GreetingView from './screens/GreetingView';
 import RulesView from './screens/RulesView';
 import StatsView from './screens/StatsView';
 import GamePresenter from './GamePresenter';
+import GameModel from './data/GameModel';
 
 const main = document.getElementById('main');
 const changeView = (element) => {
   main.innerHTML = '';
   main.appendChild(element);
 };
+
+let questionData;
 
 export default class Application {
 
@@ -32,7 +35,7 @@ export default class Application {
   }
 
   static showGame() {
-    const gamePresenter = new GamePresenter();
+    const gamePresenter = new GamePresenter(new GameModel(questionData));
     gamePresenter.onStart();
     changeView(gamePresenter.root);
   }
@@ -40,5 +43,9 @@ export default class Application {
   static showStats(stats) {
     const statsView = new StatsView(stats);
     changeView(statsView.element);
+  }
+
+  static set data(data) {
+    questionData = data;
   }
 }

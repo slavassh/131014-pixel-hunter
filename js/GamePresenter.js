@@ -4,17 +4,15 @@
 import HeaderView from './templates/HeaderView';
 import QuestionView from './templates/QuestionView';
 import ProgressView from './templates/ProgressView';
-import GameModel from './data/GameModel';
 import Application from './Application';
-
-const gameModel = new GameModel();
 
 export default class GamePresenter {
 
-  constructor() {
-    this.headerView = new HeaderView(gameModel.state);
-    this.contentView = new QuestionView(gameModel.getCurrentScreen());
-    this.progressView = new ProgressView(gameModel.state);
+  constructor(gameModel) {
+    this.model = gameModel;
+    this.headerView = new HeaderView(this.model.state);
+    this.contentView = new QuestionView(this.model.getCurrentScreen());
+    this.progressView = new ProgressView(this.model.state);
 
     this.root = document.createElement('div');
     this.root.appendChild(this.headerView.element);
@@ -25,15 +23,15 @@ export default class GamePresenter {
   }
 
   onStart() {
-    gameModel.resetGameState();
+    this.model.resetGameState();
 
     this.updateHeader();
     this.updateQuestion();
     this.updateProgress();
 
     this.interval = setInterval(() => {
-      gameModel.tick();
-      if (gameModel.isTimeOver()) {
+      this.model.tick();
+      if (this.model.isTimeOver()) {
         this.onUserChoice();
       }
       this.updateHeader();
@@ -46,27 +44,27 @@ export default class GamePresenter {
 
   onEnd() {
     this.stopTimer();
-    Application.showStats(gameModel.state);
+    Application.showStats(this.model.state);
   }
 
   updateHeader() {
-    const header = new HeaderView(gameModel.state);
+    const header = new HeaderView(this.model.state);
     header.setStopTimerCallback(this.stopTimer.bind(this));
     this.root.replaceChild(header.element, this.headerView.element);
     this.headerView = header;
   }
 
   updateProgress() {
-    const progress = new ProgressView(gameModel.state);
+    const progress = new ProgressView(this.model.state);
     this.contentView.element.replaceChild(progress.element, this.progressView.element);
     this.progressView = progress;
   }
 
   updateQuestion() {
     this.updateHeader();
-    gameModel.resetTime();
+    this.model.resetTime();
 
-    const questionView = new QuestionView(gameModel.getCurrentScreen());
+    const questionView = new QuestionView(this.model.getCurrentScreen());
     questionView.onUserChoice = this.onUserChoice.bind(this);
     this.changeContentView(questionView);
     this.updateProgress();
@@ -80,14 +78,14 @@ export default class GamePresenter {
 
   onUserChoice(userChoice) {
     if (userChoice) {
-      gameModel.addScreenResult();
+      this.model.addScreenResult();
     } else {
-      gameModel.addUserFail();
-      gameModel.lostLife();
+      this.model.addUserFail();
+      this.model.lostLife();
     }
 
-    if (gameModel.hasNextScreen() && gameModel.hasLives()) {
-      gameModel.nextScreen();
+    if (this.model.hasNextScreen() && this.model.hasLives()) {
+      this.model.nextScreen();
       this.updateQuestion();
     } else {
       this.onEnd();
