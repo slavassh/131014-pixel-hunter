@@ -41,7 +41,7 @@ export default class Application {
   }
 
   static showStats(stats) {
-    const statsView = new StatsView(stats);
+    const statsView = new StatsView(stats, questionData);
     changeView(statsView.element);
   }
 

@@ -16,7 +16,7 @@ export default class GameModel {
   }
 
   getCurrentScreen() {
-    return getScreen(this._state.screenNumber);
+    return this.data[this._state.screenNumber];
   }
 
   lostLife() {
@@ -24,11 +24,11 @@ export default class GameModel {
   }
 
   nextScreen() {
-    this._state = setScreen(this._state, this._state.screenNumber + 1);
+    this._state = setScreen(this._state, this.data, this._state.screenNumber + 1);
   }
 
   hasNextScreen() {
-    return this._state.screenNumber + 1 < this.data.screens.length;
+    return this._state.screenNumber + 1 < this.data.length;
   }
 
   tick() {

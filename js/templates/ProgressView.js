@@ -20,9 +20,10 @@ let parseAnswer = (answer) => {
 };
 
 export default class ProgressView extends AbstractView {
-  constructor(currentState) {
+  constructor(currentState, questionData) {
     super();
     this.state = currentState;
+    this.data = questionData;
     this.progressClassName = new Map([
       [Result.CORRECT, 'stats__result--correct'],
       [Result.WRONG, 'stats__result--wrong'],
@@ -33,7 +34,7 @@ export default class ProgressView extends AbstractView {
   }
 
   getStats() {
-    return this.state.screens.map((screen, i) => {
+    return this.data.map((gameScreen, i) => {
       const className = this.progressClassName.get(parseAnswer(this.state.userAnswers[i]));
       return `<li class="stats__result  ${className}"></li>`;
     }).join('');

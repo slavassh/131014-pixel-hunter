@@ -12,7 +12,7 @@ export default class GamePresenter {
     this.model = gameModel;
     this.headerView = new HeaderView(this.model.state);
     this.contentView = new QuestionView(this.model.getCurrentScreen());
-    this.progressView = new ProgressView(this.model.state);
+    this.progressView = new ProgressView(this.model.state, this.model.data);
 
     this.root = document.createElement('div');
     this.root.appendChild(this.headerView.element);
@@ -55,7 +55,7 @@ export default class GamePresenter {
   }
 
   updateProgress() {
-    const progress = new ProgressView(this.model.state);
+    const progress = new ProgressView(this.model.state, this.model.data);
     this.contentView.element.replaceChild(progress.element, this.progressView.element);
     this.progressView = progress;
   }

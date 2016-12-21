@@ -3,6 +3,7 @@
  */
 import {TaskType, AnswerType} from '../data/type-data';
 import AbstractView from './AbstractView';
+import imageLoader from '../image-loader/image-loader';
 
 class QuestionView extends AbstractView {
 
@@ -119,6 +120,14 @@ class QuestionView extends AbstractView {
     };
 
     this.element.addEventListener('click', onClick);
+
+    const imgToReplace = document.querySelector('img');
+
+    imageLoader(imgToReplace).load({
+      url: this.data.answers[0].image.url,
+      width: this.data.answers[0].image.width,
+      height: this.data.answers[0].image.height
+    });
   }
 
   addClass() {
