@@ -8,7 +8,7 @@ class QuestionView extends AbstractView {
 
   constructor(questionData) {
     super();
-    this.model = questionData;
+    this.data = questionData;
     this.typeClass = new Map([
       [TaskType.TWO_OF_TWO, 'game__content--double'],
       [TaskType.TINDER_LIKE, 'game__content--wide'],
@@ -21,9 +21,9 @@ class QuestionView extends AbstractView {
   }
 
   getMarkup() {
-    const answers = this.model.answers;
+    const answers = this.data.answers;
     let tpl = '';
-    if (this.model.type === TaskType.TWO_OF_TWO) {
+    if (this.data.type === TaskType.TWO_OF_TWO) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<div class="game__option">
                   <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
@@ -37,7 +37,7 @@ class QuestionView extends AbstractView {
                   </label>
                 </div>`;
       }
-    } else if (this.model.type === TaskType.TINDER_LIKE) {
+    } else if (this.data.type === TaskType.TINDER_LIKE) {
       tpl = `<div class="game__option">
                 <img src="${answers[0].image.url}" alt="Option 1" width="${answers[0].image.width}" height="${answers[0].image.height}">
                 <label class="game__answer  game__answer--photo">
@@ -49,7 +49,7 @@ class QuestionView extends AbstractView {
                   <span>Рисунок</span>
                 </label>
               </div>`;
-    } else if (this.model.type === TaskType.ONE_OF_THREE) {
+    } else if (this.data.type === TaskType.ONE_OF_THREE) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<label class="game__option" for="question${i}">
                    <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
@@ -59,42 +59,44 @@ class QuestionView extends AbstractView {
     }
 
     return `
-      <p class="game__task">${this.model.question}</p>
-      <form class="game__content  ${this.typeClass.get(this.model.type)}">
+      <p class="game__task">${this.data.question}</p>
+      <form class="game__content  ${this.typeClass.get(this.data.type)}">
         ${tpl}
         </div>
       </form>`;
   }
 
-  getTripleCorrect() {
-    const optionOne = this.model.answers.filter((answer) => answer === AnswerType.PAINTING);
-    const optionTwo = this.model.answers.filter((answer) => answer === AnswerType.PHOTO);
-    let correct;
-    if (optionOne.length < optionTwo.length) {
-      correct = optionOne;
-    } else {
-      correct = optionTwo;
-    }
-    return correct[0];
-  }
-
   bindHandlers() {
 
     const onClick = () => {
-      if (isAllQuestionsAnswered()) {
+      if (this.data.type === TaskType.ONE_OF_THREE && isOptionChecked()) {
+        this._onUserChoice(isOptionCorrect());
+      } else if (this.data.type !== TaskType.ONE_OF_THREE && isAllQuestionsAnswered()) {
         this._onUserChoice(isAllAnswersCorrect());
       }
+    };
+
+    const getTripleTypeCorrect = () => {
+      const optionOne = this.data.answers.filter((answer) => answer.type === AnswerType.PAINTING);
+      const optionTwo = this.data.answers.filter((answer) => answer.type === AnswerType.PHOTO);
+      let correct;
+      if (optionOne.length < optionTwo.length) {
+        correct = optionOne[0].type;
+      } else {
+        correct = optionTwo[0].type;
+      }
+      return correct;
     };
 
     const getAnswers = () => {
       let results = [];
 
       let form = this.element.querySelector('form');
-      for (let i = 0; i < this.model.answers.length; i++) {
-        if (this.model.type !== TaskType.ONE_OF_THREE) {
+      for (let i = 0; i < this.data.answers.length; i++) {
+        if (this.data.type === TaskType.ONE_OF_THREE) {
           results.push(form[`question${i}`].checked);
         } else {
-          results.push(form['question'].value);
+          results.push(form[`question${i}`].value);
         }
       }
       return results;
@@ -104,8 +106,16 @@ class QuestionView extends AbstractView {
       return getAnswers().every((answer) => answer !== '');
     };
 
+    const isOptionChecked = () => {
+      return getAnswers().some((answer) => answer === true);
+    };
+
+    const isOptionCorrect = () => {
+      return this.data.answers[getAnswers().indexOf(true)].type === getTripleTypeCorrect();
+    };
+
     const isAllAnswersCorrect = () => {
-      return getAnswers().every((answer, i) => answer === this.model.answers[i].type);
+      return getAnswers().every((answer, i) => answer === this.data.answers[i].type);
     };
 
     this.element.addEventListener('click', onClick);
