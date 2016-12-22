@@ -28,7 +28,7 @@ class QuestionView extends AbstractView {
     if (this.data.type === TaskType.TWO_OF_TWO) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<div class="game__option">
-                  <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
+                  <img src="" class="dummy-image-${i}" alt="" width="" height="">
                   <label class="game__answer game__answer--photo">
                     <input name="question${i}" type="radio" value="photo">
                     <span>Фотография</span>
@@ -41,7 +41,7 @@ class QuestionView extends AbstractView {
       }
     } else if (this.data.type === TaskType.TINDER_LIKE) {
       tpl = `<div class="game__option">
-                <img src="${answers[0].image.url}" alt="Option 0" width="${answers[0].image.width}" height="${answers[0].image.height}">
+                <img src="" class="dummy-image-0" alt="" width="" height="">
                 <label class="game__answer  game__answer--photo">
                   <input name="question0" type="radio" value="photo">
                   <span>Фотография</span>
@@ -54,7 +54,7 @@ class QuestionView extends AbstractView {
     } else if (this.data.type === TaskType.ONE_OF_THREE) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<label class="game__option" for="question${i}">
-                   <img src="${answers[i].image.url}" alt="Option ${i}" width="${answers[i].image.width}" height="${answers[i].image.height}">
+                   <img src="" class="dummy-image-${i}" alt="" width="" height="">
                    <input id="question${i}" name="question${i}" type="checkbox" value="painting">                   
                  </label>`;
       }
@@ -121,14 +121,18 @@ class QuestionView extends AbstractView {
     };
 
     this.element.addEventListener('click', onClick);
+  }
 
-    const imgToReplace = this.element.querySelector('img');
+  getImages() {
 
-    imageLoader(imgToReplace).load({
-      url: this.data.answers[0].image.url,
-      width: this.data.answers[0].image.width,
-      height: this.data.answers[0].image.height
-    });
+    for (let i = 0; i < this.data.answers.length; i++) {
+      let imgToReplace = this.element.querySelector('.dummy-image-' + i);
+      imageLoader(imgToReplace).load({
+        url: this.data.answers[i].image.url,
+        width: this.data.answers[i].image.width,
+        height: this.data.answers[i].image.height
+      });
+    }
   }
 
   addClass() {
