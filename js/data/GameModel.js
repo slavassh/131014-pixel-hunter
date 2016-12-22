@@ -2,7 +2,7 @@
  * Created by slavash on 12.12.2016.
  */
 
-import {setScreen, getScreen, setTime, setLives, setScreenResult} from './process';
+import {setScreen, setTime, setLives, setScreenResult} from './process';
 import {gameState} from './game-data';
 
 export default class GameModel {

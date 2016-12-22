@@ -16,6 +16,4 @@ window.fetch('https://intensive-ecmascript-server-nnpnvhhedl.now.sh/pixel-hunter
       Application.data = data;
     }).
     then(Application.showIntro()).
-    catch(Application.showStats);
-
-
+    catch(Application.showIntro());

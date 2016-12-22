@@ -23,6 +23,7 @@ class QuestionView extends AbstractView {
 
   getMarkup() {
     const answers = this.data.answers;
+
     let tpl = '';
     if (this.data.type === TaskType.TWO_OF_TWO) {
       for (let i = 0; i < answers.length; i++) {
@@ -40,7 +41,7 @@ class QuestionView extends AbstractView {
       }
     } else if (this.data.type === TaskType.TINDER_LIKE) {
       tpl = `<div class="game__option">
-                <img src="${answers[0].image.url}" alt="Option 1" width="${answers[0].image.width}" height="${answers[0].image.height}">
+                <img src="${answers[0].image.url}" alt="Option 0" width="${answers[0].image.width}" height="${answers[0].image.height}">
                 <label class="game__answer  game__answer--photo">
                   <input name="question0" type="radio" value="photo">
                   <span>Фотография</span>
@@ -121,7 +122,7 @@ class QuestionView extends AbstractView {
 
     this.element.addEventListener('click', onClick);
 
-    const imgToReplace = document.querySelector('img');
+    const imgToReplace = this.element.querySelector('img');
 
     imageLoader(imgToReplace).load({
       url: this.data.answers[0].image.url,

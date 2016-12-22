@@ -8,6 +8,7 @@ import RulesView from './screens/RulesView';
 import StatsView from './screens/StatsView';
 import GamePresenter from './GamePresenter';
 import GameModel from './data/GameModel';
+import ErrorView from './screens/ErrorView';
 
 const main = document.getElementById('main');
 const changeView = (element) => {
@@ -47,5 +48,10 @@ export default class Application {
 
   static set data(data) {
     questionData = data;
+  }
+
+  static showError() {
+    const errorView = new ErrorView();
+    changeView(errorView.element);
   }
 }
