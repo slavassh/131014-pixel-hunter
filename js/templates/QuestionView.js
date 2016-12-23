@@ -28,7 +28,7 @@ class QuestionView extends AbstractView {
     if (this.data.type === TaskType.TWO_OF_TWO) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<div class="game__option">
-                  <img src="" class="dummy-image-${i}" alt="" width="" height="">
+                  <img class="dummy-image">
                   <label class="game__answer game__answer--photo">
                     <input name="question${i}" type="radio" value="photo">
                     <span>Фотография</span>
@@ -41,7 +41,7 @@ class QuestionView extends AbstractView {
       }
     } else if (this.data.type === TaskType.TINDER_LIKE) {
       tpl = `<div class="game__option">
-                <img src="" class="dummy-image-0" alt="" width="" height="">
+                <img class="dummy-image">
                 <label class="game__answer  game__answer--photo">
                   <input name="question0" type="radio" value="photo">
                   <span>Фотография</span>
@@ -54,7 +54,7 @@ class QuestionView extends AbstractView {
     } else if (this.data.type === TaskType.ONE_OF_THREE) {
       for (let i = 0; i < answers.length; i++) {
         tpl += `<label class="game__option" for="question${i}">
-                   <img src="" class="dummy-image-${i}" alt="" width="" height="">
+                   <img class="dummy-image">
                    <input id="question${i}" name="question${i}" type="checkbox" value="painting">                   
                  </label>`;
       }
@@ -125,14 +125,16 @@ class QuestionView extends AbstractView {
 
   getImages() {
 
-    for (let i = 0; i < this.data.answers.length; i++) {
-      let imgToReplace = this.element.querySelector('.dummy-image-' + i);
-      imageLoader(imgToReplace).load({
+    let elementsToReplace = this.element.querySelectorAll('.dummy-image');
+
+    elementsToReplace.forEach((img, i) => {
+
+      imageLoader(img).load({
         url: this.data.answers[i].image.url,
         width: this.data.answers[i].image.width,
         height: this.data.answers[i].image.height
       });
-    }
+    });
   }
 
   addClass() {
