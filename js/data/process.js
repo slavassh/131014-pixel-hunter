@@ -32,10 +32,11 @@ export const setTime = (game, time) => {
 };
 
 export const setScreenResult = (game, result) => {
-  let arr = game.userAnswers.slice(0);
-  arr.push(result);
+  let userAnswers = game.userAnswers.slice(0);
+  userAnswers.push(result);
   return Object.assign({}, game, {
-    userAnswers: arr
+    userAnswers: userAnswers
+
   });
 };
 

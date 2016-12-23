@@ -54,8 +54,4 @@ export default class GameModel {
   addScreenResult() {
     this._state = setScreenResult(this._state, this._state.time);
   }
-
-  addUserFail() {
-    this._state = setScreenResult(this._state, false);
-  }
 }

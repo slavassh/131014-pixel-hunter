@@ -14,11 +14,11 @@ export const AnswerType = {
 };
 
 export const Result = {
-  CORRECT: 0,
-  WRONG: 1,
-  SLOW: 2,
-  FAST: 3,
-  UNKNOWN: 4
+  CORRECT: 'correct',
+  WRONG: 'wrong',
+  SLOW: 'slow',
+  FAST: 'fast',
+  UNKNOWN: 'unknown'
 };
 
 export const Points = {

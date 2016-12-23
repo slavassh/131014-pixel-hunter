@@ -5,6 +5,7 @@ import HeaderView from './templates/HeaderView';
 import QuestionView from './templates/QuestionView';
 import ProgressView from './templates/ProgressView';
 import Application from './Application';
+import {Result} from './data/type-data';
 
 export default class GamePresenter {
 
@@ -32,7 +33,7 @@ export default class GamePresenter {
     this.interval = setInterval(() => {
       this.model.tick();
       if (this.model.isTimeOver()) {
-        this.onUserChoice();
+        this.onUserChoice(false);
       }
       this.updateHeader();
     }, 1000);
@@ -78,9 +79,9 @@ export default class GamePresenter {
 
   onUserChoice(userChoice) {
     if (userChoice) {
-      this.model.addScreenResult();
+      this.model.addScreenResult(this.parseAnswer(this.model.state.time));
     } else {
-      this.model.addUserFail();
+      this.model.addScreenResult(this.parseAnswer(userChoice));
       this.model.lostLife();
     }
 
@@ -90,5 +91,20 @@ export default class GamePresenter {
     } else {
       this.onEnd();
     }
+  }
+
+  parseAnswer(answer) {
+    if (answer === void 0) {
+      return Result.UNKNOWN;
+    } else if (answer === false) {
+      return Result.WRONG;
+    } else if (answer > 20) {
+      return Result.FAST;
+    } else if (answer >= 10 && answer <= 20) {
+      return Result.CORRECT;
+    } else if (answer < 10) {
+      return Result.SLOW;
+    }
+    return answer;
   }
 }
