@@ -20,7 +20,7 @@ export default class GameModel {
   }
 
   lostLife() {
-    this._state = setLives(this._state, this._state.livesCount - 1);
+    this._state = setLives(this._state, this._state.lives - 1);
   }
 
   nextScreen() {
@@ -44,14 +44,14 @@ export default class GameModel {
   }
 
   hasLives() {
-    return this._state.livesCount > 0;
+    return this._state.lives > 0;
   }
 
   isTimeOver() {
     return this._state.time <= 0;
   }
 
-  addScreenResult() {
-    this._state = setScreenResult(this._state, this._state.time);
+  addScreenResult(result) {
+    this._state = setScreenResult(this._state, result);
   }
 }

@@ -13,12 +13,12 @@ export const setScreen = (game, data, screenNumber) => {
 };
 
 export const setLives = (game, lives) => {
-  if (lives < 0 || lives > gameState.livesCount) {
+  if (lives < 0 || lives > gameState.lives) {
     throw new RangeError(`livesCount = ${lives}. livesCount can't be negative or > max number of lives`);
   }
 
   return Object.assign({}, game, {
-    livesCount: lives
+    lives: lives
   });
 };
 
@@ -32,10 +32,11 @@ export const setTime = (game, time) => {
 };
 
 export const setScreenResult = (game, result) => {
-  let userAnswers = game.userAnswers.slice(0);
+  let userAnswers = game.stats.slice(0);
+
   userAnswers.push(result);
   return Object.assign({}, game, {
-    userAnswers: userAnswers
+    stats: userAnswers
 
   });
 };

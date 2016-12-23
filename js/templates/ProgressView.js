@@ -7,14 +7,6 @@ import {Result} from '../data/type-data';
 let parseAnswer = (answer) => {
   if (answer === void 0) {
     return Result.UNKNOWN;
-  } else if (answer === false) {
-    return Result.WRONG;
-  } else if (answer > 20) {
-    return Result.FAST;
-  } else if (answer >= 10 && answer <= 20) {
-    return Result.CORRECT;
-  } else if (answer < 10) {
-    return Result.SLOW;
   }
   return answer;
 };
@@ -35,7 +27,7 @@ export default class ProgressView extends AbstractView {
 
   getStats() {
     return this.data.map((gameScreen, i) => {
-      const className = this.progressClassName.get(parseAnswer(this.state.userAnswers[i]));
+      const className = this.progressClassName.get(parseAnswer(this.state.stats[i]));
       return `<li class="stats__result  ${className}"></li>`;
     }).join('');
   }

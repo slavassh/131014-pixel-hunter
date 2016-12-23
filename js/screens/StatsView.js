@@ -6,6 +6,7 @@ import {
   Extra,
   extraTitle,
   Points,
+  Result,
   StatsTitle,
   extraPoints
 } from '../data/type-data';
@@ -25,15 +26,15 @@ export default class StatsView extends AbstractView {
   }
 
   isGameOverTitle() {
-    return this.state.livesCount > 0 ? StatsTitle.WIN : StatsTitle.LOSE;
+    return this.state.lives > 0 ? StatsTitle.WIN : StatsTitle.LOSE;
   }
 
   getExtraCount() {
     const statsCount = [];
 
-    statsCount[Extra.FAST] = this.state.userAnswers.filter((time) => time > 20).length;
-    statsCount[Extra.LIFE] = this.state.livesCount;
-    statsCount[Extra.SLOW] = this.state.userAnswers.filter((time) => time < 10 && time !== false).length;
+    statsCount[Extra.FAST] = this.state.stats.filter((answer) => answer === Result.FAST).length;
+    statsCount[Extra.LIFE] = this.state.lives;
+    statsCount[Extra.SLOW] = this.state.stats.filter((answer) => answer === Result.SLOW).length;
 
     return statsCount;
   }
@@ -45,7 +46,7 @@ export default class StatsView extends AbstractView {
   }
 
   getCorrectPoints() {
-    const correctCount = this.state.userAnswers.filter((time) => time > 0);
+    const correctCount = this.state.stats.filter((answer) => answer !== Result.WRONG);
     return correctCount.length * Points.CORRECT;
   }
 
