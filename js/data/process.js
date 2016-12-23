@@ -3,16 +3,14 @@
  */
 import {gameState} from './game-data';
 
-export const setScreen = (game, screenNumber) => {
-  if (screenNumber < 0 || screenNumber >= gameState.screens.length) {
+export const setScreen = (game, data, screenNumber) => {
+  if (screenNumber < 0 || screenNumber >= data.length) {
     throw new RangeError(`screenNumber ${gameState.screenNumber} is out of range of screens`);
   }
   return Object.assign({}, game, {
     screenNumber: screenNumber
   });
 };
-
-export const getScreen = (num) => gameState.screens[num];
 
 export const setLives = (game, lives) => {
   if (lives < 0 || lives > gameState.livesCount) {
@@ -34,10 +32,10 @@ export const setTime = (game, time) => {
 };
 
 export const setScreenResult = (game, result) => {
-  let arr = game.answers.slice(0);
+  let arr = game.userAnswers.slice(0);
   arr.push(result);
   return Object.assign({}, game, {
-    answers: arr
+    userAnswers: arr
   });
 };
 

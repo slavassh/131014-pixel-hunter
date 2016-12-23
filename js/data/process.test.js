@@ -7,14 +7,16 @@ import assert from 'assert';
 
 describe('setScreen', () => {
   it('should throws an error if negative value passed', () => {
-    assert.throws(() => setScreen(gameState, -1));
+    let screens = [{}, {}, {}];
+    assert.throws(() => setScreen(gameState, screens, -1));
   });
   it('should throws an error if value more then number of screens', () => {
-    gameState.screens = [{}, {}, {}];
-    assert.throws(() => setScreen(gameState, gameState.screens.length));
+    let screens = [{}, {}, {}];
+    assert.throws(() => setScreen(gameState, screens, screens.length));
   });
   it('should change screenNumber in game stage', () => {
-    let state = setScreen(gameState, 2);
+    let screens = [{}, {}, {}];
+    let state = setScreen(gameState, screens, 2);
     let expectedState = Object.assign({}, gameState, {screenNumber: 2});
     assert.deepEqual(state, expectedState);
   });

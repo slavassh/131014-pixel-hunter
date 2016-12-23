@@ -1,19 +1,20 @@
 /**
  * Created by Viacheslav on 27.11.2016.
  */
-import {TaskType, questions} from '../data/type-data';
+import {TaskType, AnswerType} from '../data/type-data';
 import AbstractView from './AbstractView';
+import imageLoader from '../image-loader/image-loader';
 
 class QuestionView extends AbstractView {
 
   constructor(questionData) {
     super();
-    this.model = questionData;
-    this.typeClass = [
-      'game__content--double',
-      'game__content--wide',
-      'game__content--triple'
-    ];
+    this.data = questionData;
+    this.typeClass = new Map([
+      [TaskType.TWO_OF_TWO, 'game__content--double'],
+      [TaskType.TINDER_LIKE, 'game__content--wide'],
+      [TaskType.ONE_OF_THREE, 'game__content--triple']
+    ]);
   }
 
   set onUserChoice(handler) {
@@ -21,47 +22,47 @@ class QuestionView extends AbstractView {
   }
 
   getMarkup() {
+    const answers = this.data.answers;
+
     let tpl = '';
-    if (this.model.type === TaskType.DOUBLE) {
-      for (let i = 0; i < this.model.options.length; i++) {
+    if (this.data.type === TaskType.TWO_OF_TWO) {
+      for (let i = 0; i < answers.length; i++) {
         tpl += `<div class="game__option">
-                  <img src="${this.model.options[i].image}" alt="Option ${i}" width="468" height="458">
+                  <img class="dummy-image">
                   <label class="game__answer game__answer--photo">
                     <input name="question${i}" type="radio" value="photo">
                     <span>Фотография</span>
                   </label>
                   <label class="game__answer game__answer--paint">
-                    <input name="question${i}" type="radio" value="paint">
+                    <input name="question${i}" type="radio" value="painting">
                     <span>Рисунок</span>
                   </label>
                 </div>`;
       }
-    } else if (this.model.type === TaskType.WIDE) {
+    } else if (this.data.type === TaskType.TINDER_LIKE) {
       tpl = `<div class="game__option">
-                <img src="${this.model.options[0].image}" alt="Option 1" width="705" height="455">
+                <img class="dummy-image">
                 <label class="game__answer  game__answer--photo">
                   <input name="question0" type="radio" value="photo">
                   <span>Фотография</span>
                 </label>
                 <label class="game__answer  game__answer--wide  game__answer--paint">
-                  <input name="question0" type="radio" value="paint">
+                  <input name="question0" type="radio" value="painting">
                   <span>Рисунок</span>
                 </label>
               </div>`;
-    } else if (this.model.type === TaskType.TRIPLE) {
-      for (let i = 0; i < this.model.options.length; i++) {
-        tpl += `<label class="game__option">
-                   <img src="${this.model.options[i].image}" alt="Option ${i}" width="304" height="455">
-                   <div class="game__answer">
-                    <input name="question" type="radio" value="paint${i}">
-                   </div>
+    } else if (this.data.type === TaskType.ONE_OF_THREE) {
+      for (let i = 0; i < answers.length; i++) {
+        tpl += `<label class="game__option" for="question${i}">
+                   <img class="dummy-image">
+                   <input id="question${i}" name="question${i}" type="checkbox" value="painting">                   
                  </label>`;
       }
     }
 
     return `
-      <p class="game__task">${questions[this.model.type]}</p>
-      <form class="game__content  ${this.typeClass[this.model.type]}">
+      <p class="game__task">${this.data.question}</p>
+      <form class="game__content  ${this.typeClass.get(this.data.type)}">
         ${tpl}
         </div>
       </form>`;
@@ -69,34 +70,35 @@ class QuestionView extends AbstractView {
 
   bindHandlers() {
 
-    const onClick = (evt) => {
-      let targetClass = '';
+    const onClick = () => {
+      if (this.data.type === TaskType.ONE_OF_THREE && isOptionChecked()) {
+        this._onUserChoice(isOptionCorrect());
+      } else if (this.data.type !== TaskType.ONE_OF_THREE && isAllQuestionsAnswered()) {
+        this._onUserChoice(isAllAnswersCorrect());
+      }
+    };
 
-      if (this.model.type !== TaskType.TRIPLE) {
-        targetClass = 'game__answer';
+    const getTripleTypeCorrect = () => {
+      const optionOne = this.data.answers.filter((answer) => answer.type === AnswerType.PAINTING);
+      const optionTwo = this.data.answers.filter((answer) => answer.type === AnswerType.PHOTO);
+      let correct;
+      if (optionOne.length < optionTwo.length) {
+        correct = optionOne[0].type;
       } else {
-        targetClass = 'game__option';
+        correct = optionTwo[0].type;
       }
-
-      let target = evt.target;
-      while (target !== this.element) {
-        if (target.classList.contains(targetClass) && isAllQuestionsAnswered()) {
-          this._onUserChoice(isAllAnswersCorrect());
-          break;
-        }
-        target = target.parentNode;
-      }
+      return correct;
     };
 
     const getAnswers = () => {
       let results = [];
 
       let form = this.element.querySelector('form');
-      for (let i = 0; i < this.model.options.length; i++) {
-        if (this.model.type !== TaskType.TRIPLE) {
-          results.push(form[`question${i}`].value);
+      for (let i = 0; i < this.data.answers.length; i++) {
+        if (this.data.type === TaskType.ONE_OF_THREE) {
+          results.push(form[`question${i}`].checked);
         } else {
-          results.push(form['question'].value);
+          results.push(form[`question${i}`].value);
         }
       }
       return results;
@@ -106,11 +108,33 @@ class QuestionView extends AbstractView {
       return getAnswers().every((answer) => answer !== '');
     };
 
+    const isOptionChecked = () => {
+      return getAnswers().some((answer) => answer === true);
+    };
+
+    const isOptionCorrect = () => {
+      return this.data.answers[getAnswers().indexOf(true)].type === getTripleTypeCorrect();
+    };
+
     const isAllAnswersCorrect = () => {
-      return getAnswers().every((answer, i) => answer === this.model.options[i].correct);
+      return getAnswers().every((answer, i) => answer === this.data.answers[i].type);
     };
 
     this.element.addEventListener('click', onClick);
+  }
+
+  getImages() {
+
+    let elementsToReplace = this.element.querySelectorAll('.dummy-image');
+
+    elementsToReplace.forEach((img, i) => {
+
+      imageLoader(img).load({
+        url: this.data.answers[i].image.url,
+        width: this.data.answers[i].image.width,
+        height: this.data.answers[i].image.height
+      });
+    });
   }
 
   addClass() {

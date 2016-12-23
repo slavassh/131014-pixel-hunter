@@ -21,12 +21,19 @@ export default class GreetingView extends AbstractView {
 
   bindHandlers() {
     const rulesArrow = this.element.querySelector('.greeting__continue');
+    const rulesBack = this.element.querySelector('.greeting__asterisk');
 
     const onClick = (evt) => {
       evt.preventDefault();
       Application.showRules();
     };
 
+    const onBackClick = (evt) => {
+      evt.preventDefault();
+      Application.showIntro();
+    };
+
     rulesArrow.addEventListener('click', onClick);
+    rulesBack.addEventListener('click', onBackClick);
   }
 }

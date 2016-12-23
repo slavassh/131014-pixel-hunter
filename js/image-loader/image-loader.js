@@ -33,6 +33,7 @@ export default (element) => {
 
         image.src = myImage.url;
       }).then((img) => resizer.resize(img)).then((img) => element.parentNode.replaceChild(img, element));
+
     }
   };
 };

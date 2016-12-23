@@ -13,9 +13,10 @@ import ProgressView from '../templates/ProgressView';
 import Application from '../Application';
 
 export default class StatsView extends AbstractView {
-  constructor(currentState) {
+  constructor(currentState, questionData) {
     super();
     this.state = currentState;
+    this.data = questionData;
     this.extraClassName = new Map([
       [Extra.FAST, 'stats__result--fast'],
       [Extra.LIFE, 'stats__result--heart'],
@@ -30,9 +31,9 @@ export default class StatsView extends AbstractView {
   getExtraCount() {
     const statsCount = [];
 
-    statsCount[Extra.FAST] = this.state.answers.filter((time) => time > 20).length;
+    statsCount[Extra.FAST] = this.state.userAnswers.filter((time) => time > 20).length;
     statsCount[Extra.LIFE] = this.state.livesCount;
-    statsCount[Extra.SLOW] = this.state.answers.filter((time) => time < 10 && time !== false).length;
+    statsCount[Extra.SLOW] = this.state.userAnswers.filter((time) => time < 10 && time !== false).length;
 
     return statsCount;
   }
@@ -44,7 +45,7 @@ export default class StatsView extends AbstractView {
   }
 
   getCorrectPoints() {
-    const correctCount = this.state.answers.filter((time) => time > 0);
+    const correctCount = this.state.userAnswers.filter((time) => time > 0);
     return correctCount.length * Points.CORRECT;
   }
 
@@ -74,7 +75,7 @@ export default class StatsView extends AbstractView {
   }
 
   getMarkup() {
-    const progressView = new ProgressView(this.state);
+    const progressView = new ProgressView(this.state, this.data);
 
     return `
       <header class="header">
