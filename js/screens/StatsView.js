@@ -14,10 +14,11 @@ import ProgressView from '../templates/ProgressView';
 import Application from '../Application';
 
 export default class StatsView extends AbstractView {
-  constructor(currentState, questionData) {
+  constructor(currentState, questionData, userName) {
     super();
     this.state = currentState;
     this.data = questionData;
+    this.user = userName;
     this.extraClassName = new Map([
       [Extra.FAST, 'stats__result--fast'],
       [Extra.LIFE, 'stats__result--heart'],
@@ -77,6 +78,7 @@ export default class StatsView extends AbstractView {
 
   getMarkup() {
     const progressView = new ProgressView(this.state, this.data);
+    console.dir(this.user);
 
     return `
       <header class="header">
