@@ -12,9 +12,9 @@ let parseAnswer = (answer) => {
 };
 
 export default class ProgressView extends AbstractView {
-  constructor(currentState, questionData) {
+  constructor(stats, questionData) {
     super();
-    this.state = currentState;
+    this.stats = stats;
     this.data = questionData;
     this.progressClassName = new Map([
       [Result.CORRECT, 'stats__result--correct'],
@@ -27,7 +27,7 @@ export default class ProgressView extends AbstractView {
 
   getStats() {
     return this.data.map((gameScreen, i) => {
-      const className = this.progressClassName.get(parseAnswer(this.state.stats[i]));
+      const className = this.progressClassName.get(parseAnswer(this.stats[i]));
       return `<li class="stats__result  ${className}"></li>`;
     }).join('');
   }
@@ -40,7 +40,7 @@ export default class ProgressView extends AbstractView {
   }
 
   addClass() {
-    this.element.classList.add('stats');
+    this.element.classList.add('state');
   }
 }
 

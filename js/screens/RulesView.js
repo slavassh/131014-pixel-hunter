@@ -54,7 +54,7 @@ export default class RulesView extends AbstractView {
 
     const onSubmit = (evt) => {
       evt.preventDefault();
-      debugger;
+
       Application.user = rulesInput.value;
       Application.showGame();
     };

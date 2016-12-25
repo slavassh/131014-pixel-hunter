@@ -121,6 +121,8 @@ class QuestionView extends AbstractView {
     };
 
     this.element.addEventListener('click', onClick);
+
+    this.getImages();
   }
 
   getImages() {

@@ -56,7 +56,7 @@ export default class GamePresenter {
   }
 
   updateProgress() {
-    const progress = new ProgressView(this.model.state, this.model.data);
+    const progress = new ProgressView(this.model.state.stats, this.model.data);
     this.contentView.element.replaceChild(progress.element, this.progressView.element);
     this.progressView = progress;
   }
