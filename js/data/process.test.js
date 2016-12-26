@@ -27,11 +27,11 @@ describe('setLives', () => {
     assert.throws(() => setLives(gameState, -1));
   });
   it('should throws an error if value more then max number of lives', () => {
-    assert.throws(() => setLives(gameState, gameState.livesCount + 1));
+    assert.throws(() => setLives(gameState, gameState.lives + 1));
   });
-  it('should change livesCount in game stage', () => {
+  it('should change lives in game stage', () => {
     let state = setLives(gameState, 2);
-    let expectedState = Object.assign({}, gameState, {livesCount: 2});
+    let expectedState = Object.assign({}, gameState, {lives: 2});
     assert.deepEqual(state, expectedState);
   });
 });

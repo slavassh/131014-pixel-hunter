@@ -17,6 +17,7 @@ const changeView = (element) => {
 };
 
 let questionData;
+let userName;
 
 export default class Application {
 
@@ -42,12 +43,16 @@ export default class Application {
   }
 
   static showStats(stats) {
-    const statsView = new StatsView(stats, questionData);
+    const statsView = new StatsView(stats, questionData, userName);
     changeView(statsView.element);
   }
 
   static set data(data) {
     questionData = data;
+  }
+
+  static set user(name) {
+    userName = name;
   }
 
   static showError() {

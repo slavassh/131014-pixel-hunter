@@ -16,13 +16,13 @@ export default class HeaderView extends AbstractView {
   }
 
   _getHearts(currentState) {
-    const MAX_LIVES = gameState.livesCount;
+    const MAX_LIVES = gameState.lives;
     const emptyHeartIcon = 'img/heart__empty.svg';
     const fullHeartIcon = 'img/heart__full.svg';
 
     let hearts = '';
     for (let i = MAX_LIVES; i > 0; i--) {
-      hearts += `<img src="${currentState.livesCount < i ? emptyHeartIcon : fullHeartIcon}" class="game__heart" alt="Life" width="32" height="32">`;
+      hearts += `<img src="${currentState.lives < i ? emptyHeartIcon : fullHeartIcon}" class="game__heart" alt="Life" width="32" height="32">`;
     }
     return hearts;
   }

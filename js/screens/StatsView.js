@@ -2,80 +2,73 @@
  * Created by Viacheslav on 20.11.2016.
  */
 import AbstractView from '../templates/AbstractView';
-import {
-  Extra,
-  extraTitle,
-  Points,
-  StatsTitle,
-  extraPoints
-} from '../data/type-data';
-import ProgressView from '../templates/ProgressView';
+import {StatsTitle} from '../data/type-data';
+import ResultView from '../templates/ResultView';
 import Application from '../Application';
 
 export default class StatsView extends AbstractView {
-  constructor(currentState, questionData) {
+  constructor(currentState, questionData, userName) {
     super();
     this.state = currentState;
     this.data = questionData;
-    this.extraClassName = new Map([
-      [Extra.FAST, 'stats__result--fast'],
-      [Extra.LIFE, 'stats__result--heart'],
-      [Extra.SLOW, 'stats__result--slow']
-    ]);
+    this.user = userName;
+    this.number = 1;
+    this.result = [{
+      'date': Date.now(),
+      'stats': this.state.stats,
+      'lives': this.state.lives
+    }];
   }
 
   isGameOverTitle() {
-    return this.state.livesCount > 0 ? StatsTitle.WIN : StatsTitle.LOSE;
+    return this.state.lives > 0 ? StatsTitle.WIN : StatsTitle.LOSE;
   }
 
-  getExtraCount() {
-    const statsCount = [];
-
-    statsCount[Extra.FAST] = this.state.userAnswers.filter((time) => time > 20).length;
-    statsCount[Extra.LIFE] = this.state.livesCount;
-    statsCount[Extra.SLOW] = this.state.userAnswers.filter((time) => time < 10 && time !== false).length;
-
-    return statsCount;
-  }
-
-  getExtraPoints() {
-    const statsCount = this.getExtraCount();
-
-    return statsCount.map((item, i) => extraPoints.get(i) * statsCount[i]);
-  }
-
-  getCorrectPoints() {
-    const correctCount = this.state.userAnswers.filter((time) => time > 0);
-    return correctCount.length * Points.CORRECT;
-  }
-
-  getFinalPoints() {
-    return this.getCorrectPoints() + this.getExtraPoints().reduce((sum, current) => sum + current);
-  }
-
-  getExtra() {
-    const extraCount = this.getExtraCount();
-
-    let tpl = '';
-    for (let i = 0; i < extraCount.length; i++) {
-      if (extraCount[i]) {
-        tpl += `<tr>
-        <td></td>
-        <td class="result__extra">${extraTitle.get(i)}</td>
-        <td class="result__extra">
-          ${extraCount[i]}&nbsp;
-          <span class="stats__result ${this.extraClassName.get(i)}"></span>
-        </td>
-        <td class="result__points">×&nbsp;${Math.abs(extraPoints.get(i))}</td>
-        <td class="result__total">${this.getExtraPoints()[i]}</td>
-      </tr>`;
+  getStatsHistory() {
+    const status = (response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response;
+      } else if (response.status === 404) {
+        return false;
+      } else {
+        throw new Error(`${response.status}: ${response.statusText}`);
       }
-    }
-    return tpl;
+    };
+
+    const fetchStats = () => {
+      this.postStats();
+    };
+
+    window.fetch(`https://intensive-ecmascript-server-dxttmcdylw.now.sh/pixel-hunter/stats/${this.user}`).
+        then(status).
+        then((response) => response.json()).
+        then((data) => {
+          this.addResults(data.reverse());
+        }).
+        then(fetchStats).
+        catch(fetchStats);
+  }
+
+  postStats() {
+    const status = (response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response;
+      } else {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      }
+    };
+
+    window.fetch(`https://intensive-ecmascript-server-dxttmcdylw.now.sh/pixel-hunter/stats/${this.user}`, {
+      method: 'POST',
+      body: JSON.stringify(this.result[0]),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).
+        then(status);
   }
 
   getMarkup() {
-    const progressView = new ProgressView(this.state, this.data);
 
     return `
       <header class="header">
@@ -87,28 +80,24 @@ export default class StatsView extends AbstractView {
         </div>
       </header>
       
-      <div class="result">
-      
-      <h1>${this.isGameOverTitle()}</h1>
-        
-      <table class="result__table">
-        <tr>
-          <td class="result__number">1.</td>
-          <td colspan="2">
-          ${progressView.getMarkup()}
-          </td>
-          <td class="result__points">×&nbsp;${Points.CORRECT}</td>
-          <td class="result__total">${this.getCorrectPoints()}</td>
-        </tr>
-        ${this.getExtra()}
-        <tr>
-          <td colspan="5" class="result__total  result__total--final">${this.getFinalPoints()}</td>
-        </tr>
-      </table>  
+      <div class="result">      
+        <h1>${this.isGameOverTitle()}</h1>        
       </div>`;
   }
 
+  addResults(results) {
+    const resultsContainer = this.element.querySelector('.result');
+    results.forEach((result) => {
+      let resultView = new ResultView(result, this.data, this.number++);
+      resultsContainer.appendChild(resultView.element);
+    });
+
+  }
+
   bindHandlers() {
+    this.addResults(this.result);
+    this.getStatsHistory();
+
     const backLinkLogo = this.element.querySelector('.header__back');
 
     backLinkLogo.style.cursor = 'pointer';

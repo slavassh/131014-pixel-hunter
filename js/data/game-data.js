@@ -1,6 +1,6 @@
 export const gameState = {
-  livesCount: 3,
+  lives: 3,
   screenNumber: 0,
   time: 30,
-  userAnswers: []
+  stats: []
 };
