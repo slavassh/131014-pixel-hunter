@@ -12,9 +12,10 @@ import {
 import ProgressView from '../templates/ProgressView';
 
 export default class ResultView extends AbstractView {
-  constructor(result, questionData) {
+  constructor(result, questionData, resultNumber) {
     super();
     this.result = result;
+    this.number = resultNumber;
     this.data = questionData;
     this.extraClassName = new Map([
       [Extra.FAST, 'stats__result--fast'],
@@ -71,20 +72,30 @@ export default class ResultView extends AbstractView {
 
   getMarkup() {
     let progressView = new ProgressView(this.result.stats, this.data);
+    let tpl = '';
 
-    return `        
-      <table class="result__table">
-        <tr>
-          <td class="result__number">1.</td>
-          <td colspan="2">
-          ${progressView.getMarkup()}
-          </td>
+    if (this.result.lives > 0) {
+      tpl = `
           <td class="result__points">×&nbsp;${Points.CORRECT}</td>
           <td class="result__total">${this.getCorrectPoints()}</td>
         </tr>
         ${this.getExtra()}
         <tr>
-          <td colspan="5" class="result__total  result__total--final">${this.getFinalPoints()}</td>
+          <td colspan="5" class="result__total  result__total--final">${this.getFinalPoints()}</td>`;
+    } else {
+      tpl = `
+        <td class="result__total"></td>
+        <td class="result__total  result__total--final">fail</td>`;
+    }
+
+    return `        
+      <table class="result__table">
+        <tr>
+          <td class="result__number">${this.number}.</td>
+          <td colspan="2">
+          ${progressView.getMarkup()}
+          </td>
+          ${tpl}
         </tr>
       </table>  
       </div>`;

@@ -12,7 +12,8 @@ export default class StatsView extends AbstractView {
     this.state = currentState;
     this.data = questionData;
     this.user = userName;
-    this.results = [{
+    this.number = 1;
+    this.result = [{
       'date': Date.now(),
       'stats': this.state.stats,
       'lives': this.state.lives
@@ -21,6 +22,31 @@ export default class StatsView extends AbstractView {
 
   isGameOverTitle() {
     return this.state.lives > 0 ? StatsTitle.WIN : StatsTitle.LOSE;
+  }
+
+  getStatsHistory() {
+    const status = (response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response;
+      } else if (response.status === 404) {
+        return false;
+      } else {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      }
+    };
+
+    const fetchStats = () => {
+      this.postStats();
+    };
+
+    window.fetch(`https://intensive-ecmascript-server-dxttmcdylw.now.sh/pixel-hunter/stats/${this.user}`).
+        then(status).
+        then((response) => response.json()).
+        then((data) => {
+          this.addResults(data.reverse());
+        }).
+        then(fetchStats).
+        catch(fetchStats);
   }
 
   postStats() {
@@ -34,13 +60,12 @@ export default class StatsView extends AbstractView {
 
     window.fetch(`https://intensive-ecmascript-server-dxttmcdylw.now.sh/pixel-hunter/stats/${this.user}`, {
       method: 'POST',
-      body: JSON.stringify(this.results[0]),
+      body: JSON.stringify(this.result[0]),
       headers: {
         'Content-Type': 'application/json'
       }
     }).
-        then(status).
-        catch(Application.showError);
+        then(status);
   }
 
   getMarkup() {
@@ -60,16 +85,18 @@ export default class StatsView extends AbstractView {
       </div>`;
   }
 
-  addResults() {
-    let resultView = new ResultView(this.results[0], this.data);
-    const resultsContainter = this.element.querySelector('.result');
+  addResults(results) {
+    const resultsContainer = this.element.querySelector('.result');
+    results.forEach((result) => {
+      let resultView = new ResultView(result, this.data, this.number++);
+      resultsContainer.appendChild(resultView.element);
+    });
 
-    resultsContainter.appendChild(resultView.element);
   }
 
   bindHandlers() {
-    this.addResults();
-    this.postStats();
+    this.addResults(this.result);
+    this.getStatsHistory();
 
     const backLinkLogo = this.element.querySelector('.header__back');
 
