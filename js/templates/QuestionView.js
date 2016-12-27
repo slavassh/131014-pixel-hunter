@@ -97,15 +97,18 @@ class QuestionView extends AbstractView {
         if (this.data.type === TaskType.ONE_OF_THREE) {
           results.push(form[`question${i}`].checked);
         } else {
-          results.push(form[`question${i}`].value);
-          debugger;
+          if (form[i].checked) {
+            results.push(form[i].value);
+          }
         }
       }
+      console.dir(results);
       return results;
     };
 
     const isAllQuestionsAnswered = () => {
-      return getAnswers().every((answer) => answer !== '');
+      debugger;
+      return getAnswers().length >= this.data.answers.length;
     };
 
     const isOptionChecked = () => {
