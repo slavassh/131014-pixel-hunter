@@ -69,7 +69,6 @@ class QuestionView extends AbstractView {
   }
 
   bindHandlers() {
-
     const onClick = () => {
       if (this.data.type === TaskType.ONE_OF_THREE && isOptionChecked()) {
         this._onUserChoice(isOptionCorrect());
@@ -99,6 +98,7 @@ class QuestionView extends AbstractView {
           results.push(form[`question${i}`].checked);
         } else {
           results.push(form[`question${i}`].value);
+          debugger;
         }
       }
       return results;
@@ -129,14 +129,15 @@ class QuestionView extends AbstractView {
 
     let elementsToReplace = this.element.querySelectorAll('.dummy-image');
 
-    elementsToReplace.forEach((img, i) => {
-
+    let i = 0;
+    for (let img of elementsToReplace) {
       imageLoader(img).load({
         url: this.data.answers[i].image.url,
         width: this.data.answers[i].image.width,
         height: this.data.answers[i].image.height
       });
-    });
+      i++;
+    }
   }
 
   addClass() {

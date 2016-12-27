@@ -1,4 +1,8 @@
 import Application from './Application';
+import polyfillPromise from 'core-js/es6/promise';
+if (!window.Promise) {
+  window.Promise = polyfillPromise;
+}
 import 'whatwg-fetch';
 
 Application.showIntro();
