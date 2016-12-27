@@ -40,7 +40,7 @@ export default class ProgressView extends AbstractView {
   }
 
   addClass() {
-    this.element.classList.add('state');
+    this.element.classList.add('_state');
   }
 }
 

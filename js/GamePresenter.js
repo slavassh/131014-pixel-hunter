@@ -10,29 +10,29 @@ import {Result} from './data/type-data';
 export default class GamePresenter {
 
   constructor(gameModel) {
-    this.model = gameModel;
-    this.headerView = new HeaderView(this.model.state);
-    this.contentView = new QuestionView(this.model.getCurrentScreen());
-    this.progressView = new ProgressView(this.model.state, this.model.data);
+    this._model = gameModel;
+    this._headerView = new HeaderView(this._model._state);
+    this._contentView = new QuestionView(this._model.getCurrentScreen());
+    this._progressView = new ProgressView(this._model._state, this._model._data);
 
     this.root = document.createElement('div');
-    this.root.appendChild(this.headerView.element);
-    this.root.appendChild(this.contentView.element);
-    this.contentView.element.appendChild(this.progressView.element);
+    this.root.appendChild(this._headerView.element);
+    this.root.appendChild(this._contentView.element);
+    this._contentView.element.appendChild(this._progressView.element);
 
-    this.interval = null;
+    this._interval = null;
   }
 
   onStart() {
-    this.model.resetGameState();
+    this._model.resetGameState();
 
     this.updateHeader();
     this.updateQuestion();
     this.updateProgress();
 
-    this.interval = setInterval(() => {
-      this.model.tick();
-      if (this.model.isTimeOver()) {
+    this._interval = setInterval(() => {
+      this._model.tick();
+      if (this._model.isTimeOver()) {
         this.onUserChoice(false);
       }
       this.updateHeader();
@@ -40,53 +40,55 @@ export default class GamePresenter {
   }
 
   stopTimer() {
-    clearInterval(this.interval);
+    clearInterval(this._interval);
   }
 
   onEnd() {
     this.stopTimer();
-    Application.showStats(this.model.state);
+    Application.showStats(this._model._state);
   }
 
   updateHeader() {
-    const header = new HeaderView(this.model.state);
+    const header = new HeaderView(this._model._state);
     header.setStopTimerCallback(this.stopTimer.bind(this));
-    this.root.replaceChild(header.element, this.headerView.element);
-    this.headerView = header;
+    this.root.replaceChild(header.element, this._headerView.element);
+    this._headerView.clearHandlers();
+    this._headerView = header;
   }
 
   updateProgress() {
-    const progress = new ProgressView(this.model.state.stats, this.model.data);
-    this.contentView.element.replaceChild(progress.element, this.progressView.element);
-    this.progressView = progress;
+    const progress = new ProgressView(this._model._state.stats, this._model._data);
+    this._contentView.element.replaceChild(progress.element, this._progressView.element);
+    this._progressView = progress;
   }
 
   updateQuestion() {
     this.updateHeader();
-    this.model.resetTime();
+    this._model.resetTime();
 
-    const questionView = new QuestionView(this.model.getCurrentScreen());
+    const questionView = new QuestionView(this._model.getCurrentScreen());
     questionView.onUserChoice = this.onUserChoice.bind(this);
     this.changeContentView(questionView);
     this.updateProgress();
   }
 
   changeContentView(view) {
-    this.root.replaceChild(view.element, this.contentView.element);
-    view.element.appendChild(this.progressView.element);
-    this.contentView = view;
+    this.root.replaceChild(view.element, this._contentView.element);
+    view.element.appendChild(this._progressView.element);
+    this._contentView.clearHandlers();
+    this._contentView = view;
   }
 
   onUserChoice(userChoice) {
     if (userChoice) {
-      this.model.addScreenResult(this.parseAnswer(this.model.state.time));
+      this._model.addScreenResult(this.parseAnswer(this._model._state.time));
     } else {
-      this.model.addScreenResult(this.parseAnswer(userChoice));
-      this.model.lostLife();
+      this._model.addScreenResult(this.parseAnswer(userChoice));
+      this._model.lostLife();
     }
 
-    if (this.model.hasNextScreen() && this.model.hasLives()) {
-      this.model.nextScreen();
+    if (this._model.hasNextScreen() && this._model.hasLives()) {
+      this._model.nextScreen();
       this.updateQuestion();
     } else {
       this.onEnd();
