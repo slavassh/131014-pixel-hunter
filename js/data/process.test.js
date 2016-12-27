@@ -10,7 +10,7 @@ describe('setScreen', () => {
     let screens = [{}, {}, {}];
     assert.throws(() => setScreen(gameState, screens, -1));
   });
-  it('should throws an error if value more then number of screens', () => {
+  it('should throws an error if value more then _number of screens', () => {
     let screens = [{}, {}, {}];
     assert.throws(() => setScreen(gameState, screens, screens.length));
   });
@@ -26,7 +26,7 @@ describe('setLives', () => {
   it('should throws an error if Number of lives < 0', () => {
     assert.throws(() => setLives(gameState, -1));
   });
-  it('should throws an error if value more then max number of lives', () => {
+  it('should throws an error if value more then max _number of lives', () => {
     assert.throws(() => setLives(gameState, gameState.lives + 1));
   });
   it('should change lives in game stage', () => {

@@ -8,7 +8,7 @@ import {gameState} from './game-data';
 export default class GameModel {
   constructor(data, state = gameState) {
     this._state = state;
-    this.data = data;
+    this._data = data;
   }
 
   get state() {
@@ -16,7 +16,7 @@ export default class GameModel {
   }
 
   getCurrentScreen() {
-    return this.data[this._state.screenNumber];
+    return this._data[this._state.screenNumber];
   }
 
   lostLife() {
@@ -24,11 +24,11 @@ export default class GameModel {
   }
 
   nextScreen() {
-    this._state = setScreen(this._state, this.data, this._state.screenNumber + 1);
+    this._state = setScreen(this._state, this._data, this._state.screenNumber + 1);
   }
 
   hasNextScreen() {
-    return this._state.screenNumber + 1 < this.data.length;
+    return this._state.screenNumber + 1 < this._data.length;
   }
 
   tick() {

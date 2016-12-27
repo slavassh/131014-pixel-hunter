@@ -8,7 +8,7 @@ import {gameState} from '../data/game-data';
 export default class HeaderView extends AbstractView {
   constructor(currentState) {
     super();
-    this.state = currentState;
+    this._state = currentState;
   }
 
   setStopTimerCallback(callback) {
@@ -29,18 +29,13 @@ export default class HeaderView extends AbstractView {
 
   getMarkup() {
     return `
-      <header class="header">
-        <div class="header__back">
-          <span class="back">
-            <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-            <img src="img/logo_small.png" width="101" height="44">
-          </span>
-        </div>
+      <header class="header">      
+        ${HeaderView.getHeaderBack()}
         <div>
-          <h1 class="game__timer">${this.state.time}</h1>
+          <h1 class="game__timer">${this._state.time}</h1>
           </div>
           <div class="game__lives">
-            ${this._getHearts(this.state)}
+            ${this._getHearts(this._state)}
          </div>
       </header>`;
   }
@@ -59,4 +54,20 @@ export default class HeaderView extends AbstractView {
 
     backLinkLogo.addEventListener('click', onBackClick);
   }
+
+  clearHandlers() {
+    this.stopTimer = null;
+  }
+
+  static getHeaderBack() {
+    return `
+        <div class="header__back">
+          <span class="back">
+            <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
+            <img src="img/logo_small.png" width="101" height="44">
+          </span>
+        </div>`;
+  }
 }
+
+

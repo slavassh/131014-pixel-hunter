@@ -9,7 +9,7 @@ class QuestionView extends AbstractView {
 
   constructor(questionData) {
     super();
-    this.data = questionData;
+    this._data = questionData;
     this.typeClass = new Map([
       [TaskType.TWO_OF_TWO, 'game__content--double'],
       [TaskType.TINDER_LIKE, 'game__content--wide'],
@@ -22,12 +22,12 @@ class QuestionView extends AbstractView {
   }
 
   getMarkup() {
-    const answers = this.data.answers;
+    const answers = this._data.answers;
 
-    let tpl = '';
-    if (this.data.type === TaskType.TWO_OF_TWO) {
+    let template = '';
+    if (this._data.type === TaskType.TWO_OF_TWO) {
       for (let i = 0; i < answers.length; i++) {
-        tpl += `<div class="game__option">
+        template += `<div class="game__option">
                   <img class="dummy-image">
                   <label class="game__answer game__answer--photo">
                     <input name="question${i}" type="radio" value="photo">
@@ -39,8 +39,8 @@ class QuestionView extends AbstractView {
                   </label>
                 </div>`;
       }
-    } else if (this.data.type === TaskType.TINDER_LIKE) {
-      tpl = `<div class="game__option">
+    } else if (this._data.type === TaskType.TINDER_LIKE) {
+      template = `<div class="game__option">
                 <img class="dummy-image">
                 <label class="game__answer  game__answer--photo">
                   <input name="question0" type="radio" value="photo">
@@ -51,9 +51,9 @@ class QuestionView extends AbstractView {
                   <span>Рисунок</span>
                 </label>
               </div>`;
-    } else if (this.data.type === TaskType.ONE_OF_THREE) {
+    } else if (this._data.type === TaskType.ONE_OF_THREE) {
       for (let i = 0; i < answers.length; i++) {
-        tpl += `<label class="game__option" for="question${i}">
+        template += `<label class="game__option" for="question${i}">
                    <img class="dummy-image">
                    <input id="question${i}" name="question${i}" type="checkbox" value="painting">                   
                  </label>`;
@@ -61,25 +61,40 @@ class QuestionView extends AbstractView {
     }
 
     return `
-      <p class="game__task">${this.data.question}</p>
-      <form class="game__content  ${this.typeClass.get(this.data.type)}">
-        ${tpl}
+      <p class="game__task">${this._data.question}</p>
+      <form class="game__content  ${this.typeClass.get(this._data.type)}">
+        ${template}
         </div>
       </form>`;
   }
 
+  getImages() {
+
+    let elementsToReplace = this.element.querySelectorAll('.dummy-image');
+
+    elementsToReplace.forEach((img, i) => {
+
+      imageLoader(img).load({
+        url: this._data.answers[i].image.url,
+        width: this._data.answers[i].image.width,
+        height: this._data.answers[i].image.height
+      });
+    });
+  }
+
   bindHandlers() {
+
     const onClick = () => {
-      if (this.data.type === TaskType.ONE_OF_THREE && isOptionChecked()) {
+      if (this._data.type === TaskType.ONE_OF_THREE && isOptionChecked()) {
         this._onUserChoice(isOptionCorrect());
-      } else if (this.data.type !== TaskType.ONE_OF_THREE && isAllQuestionsAnswered()) {
+      } else if (this._data.type !== TaskType.ONE_OF_THREE && isAllQuestionsAnswered()) {
         this._onUserChoice(isAllAnswersCorrect());
       }
     };
 
     const getTripleTypeCorrect = () => {
-      const optionOne = this.data.answers.filter((answer) => answer.type === AnswerType.PAINTING);
-      const optionTwo = this.data.answers.filter((answer) => answer.type === AnswerType.PHOTO);
+      const optionOne = this._data.answers.filter((answer) => answer.type === AnswerType.PAINTING);
+      const optionTwo = this._data.answers.filter((answer) => answer.type === AnswerType.PHOTO);
       let correct;
       if (optionOne.length < optionTwo.length) {
         correct = optionOne[0].type;
@@ -93,12 +108,11 @@ class QuestionView extends AbstractView {
       let results = [];
 
       let form = this.element.querySelector('form');
-      for (let i = 0; i < this.data.answers.length; i++) {
-        if (this.data.type === TaskType.ONE_OF_THREE) {
+      for (let i = 0; i < this._data.answers.length; i++) {
+        if (this._data.type === TaskType.ONE_OF_THREE) {
           results.push(form[`question${i}`].checked);
         } else {
           results.push(form[`question${i}`].value);
-          debugger;
         }
       }
       return results;
@@ -113,11 +127,11 @@ class QuestionView extends AbstractView {
     };
 
     const isOptionCorrect = () => {
-      return this.data.answers[getAnswers().indexOf(true)].type === getTripleTypeCorrect();
+      return this._data.answers[getAnswers().indexOf(true)].type === getTripleTypeCorrect();
     };
 
     const isAllAnswersCorrect = () => {
-      return getAnswers().every((answer, i) => answer === this.data.answers[i].type);
+      return getAnswers().every((answer, i) => answer === this._data.answers[i].type);
     };
 
     this.element.addEventListener('click', onClick);
@@ -125,19 +139,8 @@ class QuestionView extends AbstractView {
     this.getImages();
   }
 
-  getImages() {
-
-    let elementsToReplace = this.element.querySelectorAll('.dummy-image');
-
-    let i = 0;
-    for (let img of elementsToReplace) {
-      imageLoader(img).load({
-        url: this.data.answers[i].image.url,
-        width: this.data.answers[i].image.width,
-        height: this.data.answers[i].image.height
-      });
-      i++;
-    }
+  clearHandlers() {
+    this._onUserChoice = null;
   }
 
   addClass() {
