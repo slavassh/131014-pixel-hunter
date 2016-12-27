@@ -1,9 +1,6 @@
 import Application from './Application';
 import {status} from './utils';
-import polyfillPromise from 'core-js/es6/promise';
-if (!window.Promise) {
-  window.Promise = polyfillPromise;
-}
+import 'babel-polyfill';
 import 'whatwg-fetch';
 
 Application.showIntro();
