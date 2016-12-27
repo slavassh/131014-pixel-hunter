@@ -36,15 +36,3 @@ export const Extra = {
   LIFE: 1,
   SLOW: 2
 };
-
-export const extraPoints = new Map([
-  [Extra.FAST, Points.BONUS],
-  [Extra.LIFE, Points.BONUS],
-  [Extra.SLOW, -Points.BONUS]
-]);
-
-export const extraTitle = new Map([
-  [Extra.FAST, 'Бонус за скорость'],
-  [Extra.LIFE, 'Бонус за жизни'],
-  [Extra.SLOW, 'Штраф за медлительность']
-]);

@@ -4,10 +4,8 @@
 import AbstractView from '../templates/AbstractView';
 import {
   Extra,
-  extraTitle,
   Points,
   Result,
-  extraPoints
 } from '../data/type-data';
 import ProgressView from '../templates/ProgressView';
 
@@ -21,6 +19,17 @@ export default class ResultView extends AbstractView {
       [Extra.FAST, 'stats__result--fast'],
       [Extra.LIFE, 'stats__result--heart'],
       [Extra.SLOW, 'stats__result--slow']
+    ]);
+    this.extraPoints = new Map([
+      [Extra.FAST, Points.BONUS],
+      [Extra.LIFE, Points.BONUS],
+      [Extra.SLOW, -Points.BONUS]
+    ]);
+
+    this.extraTitle = new Map([
+      [Extra.FAST, 'Бонус за скорость'],
+      [Extra.LIFE, 'Бонус за жизни'],
+      [Extra.SLOW, 'Штраф за медлительность']
     ]);
   }
 
@@ -37,7 +46,7 @@ export default class ResultView extends AbstractView {
   getExtraPoints() {
     const statsCount = this.getExtraCount();
 
-    return statsCount.map((item, i) => extraPoints.get(i) * statsCount[i]);
+    return statsCount.map((item, i) => this.extraPoints.get(i) * statsCount[i]);
   }
 
   getCorrectPoints() {
@@ -57,12 +66,12 @@ export default class ResultView extends AbstractView {
       if (extraCount[i]) {
         template += `<tr>
         <td></td>
-        <td class="result__extra">${extraTitle.get(i)}</td>
+        <td class="result__extra">${this.extraTitle.get(i)}</td>
         <td class="result__extra">
           ${extraCount[i]}&nbsp;
           <span class="stats__result ${this.extraClassName.get(i)}"></span>
         </td>
-        <td class="result__points">×&nbsp;${Math.abs(extraPoints.get(i))}</td>
+        <td class="result__points">×&nbsp;${Math.abs(this.extraPoints.get(i))}</td>
         <td class="result__total">${this.getExtraPoints()[i]}</td>
       </tr>`;
       }
@@ -107,6 +116,5 @@ export default class ResultView extends AbstractView {
         </table> 
       </div>`;
   }
-
 
 }
