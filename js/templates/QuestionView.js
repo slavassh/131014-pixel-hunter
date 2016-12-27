@@ -107,20 +107,25 @@ class QuestionView extends AbstractView {
 
     const getAnswers = () => {
       let results = [];
-
+      let checkedValue;
       let form = this.element.querySelector('form');
-      for (let i = 0; i < this._data.answers.length; i++) {
-        if (this._data.type === TaskType.ONE_OF_THREE) {
+
+      if (this._data.type === TaskType.ONE_OF_THREE) {
+        for (let i = 0; i < this._data.answers.length; i++) {
           results.push(form[`question${i}`].checked);
-        } else {
-          results.push(form[`question${i}`].value);
+        }
+      } else if (form.querySelector('input:checked')) {
+        checkedValue = document.querySelectorAll('input:checked');
+        for (let answer of checkedValue) {
+          results.push(answer.value);
         }
       }
+
       return results;
     };
 
     const isAllQuestionsAnswered = () => {
-      return getAnswers().length >= this.data.answers.length;
+      return getAnswers().length >= this._data.answers.length;
     };
 
     const isOptionChecked = () => {
