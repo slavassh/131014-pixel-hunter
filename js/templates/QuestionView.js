@@ -120,7 +120,7 @@ class QuestionView extends AbstractView {
     };
 
     const isAllQuestionsAnswered = () => {
-      return getAnswers().every((answer) => answer !== '');
+      return getAnswers().length >= this.data.answers.length;
     };
 
     const isOptionChecked = () => {
